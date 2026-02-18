@@ -6,7 +6,7 @@ import { login_register } from "../api/login_regis";
 import CustomButton from "../components/botonBoton";
 
 export default function RegisterView() {
-
+    //campos de registro con setNombreCampo para "recordar"
     const [nombre, setNombre] = useState("");
     const [apellidos, setApellidos] = useState("");
     const [correo, setEmail] = useState("");
@@ -18,6 +18,7 @@ export default function RegisterView() {
 
     // Funcion para registrarse
     const registro = async () => {
+        //datos del registro
         const datos = {
             nombre,
             apellidos,
@@ -29,7 +30,7 @@ export default function RegisterView() {
         const res = await login_register.register(datos);
 
         if (res.success) {
-            Alert.alert("Éxito", res.message);
+            Alert.alert("yupi", res.message);
             router.push("/login");
         } else {
             Alert.alert("Error", res.error);
@@ -62,7 +63,6 @@ export default function RegisterView() {
                 value={correo}
                 onChangeText={setEmail}
                 style={styles.input}
-                keyboardType="email-address"
             />
 
             {/* juntar el input del contaseñña con el de boton */}

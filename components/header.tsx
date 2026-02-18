@@ -1,40 +1,64 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
+import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 interface HeaderProps {
   title: string;
-  onMenuPress: () => void; // función que controla la barra lateral
+  onMenuPress: () => void;
 }
 
 export default function Header({ title, onMenuPress }: HeaderProps) {
+  
+
+  
+
   return (
     <View style={styles.header}>
-      <Pressable onPress={onMenuPress} style={styles.menuButton}>
-        <MaterialIcons name="menu" size={30} color="#fff" />
-      </Pressable>
-      <Text style={styles.title}>{title}</Text>
+      
+      <View style={styles.leftSection}>
+        <Pressable onPress={onMenuPress} style={styles.menuButton}>
+          <MaterialIcons name="menu" size={28} color="#fff" />
+        </Pressable>
+
+        <Text style={styles.title}>{title}</Text>
+      </View>
+
+
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   header: {
-    display:"flex",
-    padding:10,
-    height: 90,
-    paddingTop:20,
-    paddingLeft:30,
-    backgroundColor: "#1055a0",
+    height: 85,
+    paddingHorizontal: 20,
+    paddingTop: 40,
+    backgroundColor: "#3433CD",
+
     flexDirection: "row",
-    alignItems:"flex-end",
-    justifyContent:"flex-start"
+    alignItems: "center",
+    justifyContent: "space-between",
+
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 5,
   },
-  menuButton:{
-    marginRight:10
+
+  leftSection: {
+    flexDirection: "row",
+    alignItems: "center",
   },
+
+  menuButton: {
+    marginRight: 12,
+  },
+
   title: {
     fontSize: 20,
-    color: "#fff",
     fontWeight: "bold",
+    color: "#fff",
   },
 });

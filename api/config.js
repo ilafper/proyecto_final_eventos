@@ -1,8 +1,6 @@
-
-// Este archivo guarda la dirección de tu backend
-//conexion a la api de express
+//conexion a la api de express 
 import axios from 'axios';
-
+// direccion api, tengo que colocar la ip local de mi esquipo y cambiar en la api que en vez de local host que escuche de todas pero no entiendia por que ya estaba en la misma red
 const mi_api = "http://192.168.1.131:3000/";
 
 const api = axios.create({

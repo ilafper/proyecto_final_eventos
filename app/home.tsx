@@ -1,138 +1,95 @@
-import { MaterialIcons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import Header from "../components/header";
+import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import fondo from "../assets/images/fondo.png";
 import CustomButton from "../components/botonBoton";
+import Header from "../components/header";
 
-export default function HomeView() {
-  const [showSidebar, setShowSidebar] = useState(false); // controla la barra lateral
+import Sidebar from "../components/sidebar";
+export default function Home() {
+  const [showSidebar, setShowSidebar] = useState(false);
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
-      {/* Header siempre visible */}
-      <Header
-        title="Home"
-        onMenuPress={() => setShowSidebar(!showSidebar)} // alterna visibilidad
-      />
+      {/* Header */}
+      <Header title="Home" onMenuPress={() => setShowSidebar(!showSidebar)} />
 
-      {/* Contenido principal */}
-      <ScrollView style={styles.content}>
-        <Text style={styles.welcome}>Bienvenido</Text>
-        <Text style={styles.subtitle}>
-          Accede rápidamente a las acciones principales
-        </Text>
-
-        <View style={styles.cardsContainer}>
+      <ImageBackground source={fondo} style={styles.background} resizeMode="cover">
+        <View style={styles.overlay}>
+          <Text style={styles.texto}>Descubre nuestros eventos</Text>
           <CustomButton
             title="Eventos"
             onPress={() => router.push("/eventos")}
-            icon={<MaterialIcons name="event" size={24} color="#fff" />}
-            style={styles.cardButton}
-          />
-          <CustomButton
-            title="Reservas"
-            onPress={() => router.push("/reservas")}
-            icon={<MaterialIcons name="book-online" size={24} color="#fff" />}
-            style={styles.cardButton}
+            style={styles.boton}
+            textStyle={styles.botonTexto}
           />
         </View>
-      </ScrollView>
+      </ImageBackground>
 
-      {/* Sidebar simple que se muestra solo si showSidebar = true */}
+      
+      {/* Sidebar flotante */}
       {showSidebar && (
-        <View style={styles.sidebar}>
-          <Pressable
-            style={styles.closeButton}
-            onPress={() => setShowSidebar(false)}
-          >
-            <MaterialIcons name="close" size={28} color="#fff" />
-          </Pressable>
-
-          <CustomButton
-            title="Home"
-            onPress={() => router.push("/")}
-            icon={<MaterialIcons name="home" size={20} color="#fff" />}
-            style={styles.sidebarButton}
-            textStyle={styles.sidebarButtonText}
-          />
-          <CustomButton
-            title="Eventos"
-            onPress={() => router.push("/eventos")}
-            icon={<MaterialIcons name="event" size={20} color="#fff" />}
-            style={styles.sidebarButton}
-            textStyle={styles.sidebarButtonText}
-          />
-          <CustomButton
-            title="Reservas"
-            onPress={() => router.push("/reservas")}
-            icon={<MaterialIcons name="book-online" size={20} color="#fff" />}
-            style={styles.sidebarButton}
-            textStyle={styles.sidebarButtonText}
-          />
-        </View>
+        <Sidebar
+          onClose={() => setShowSidebar(false)}
+        />
       )}
     </View>
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#f2f2f2",
   },
-  content: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#e6f0ff",
+  main: {
+    display:"flex",
+    padding: 0,
+    flexDirection:"column"
   },
-  welcome: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#1055a0",
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: "#1055a0",
-    marginBottom: 20,
-  },
-  cardsContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  cardButton: {
-    width: "48%",
-    marginVertical: 10,
-    paddingVertical: 20,
-    borderRadius: 12,
-    backgroundColor: "#1055a0",
-  },
-  sidebar: {
+
+  sidebarOverlay: {
     position: "absolute",
     top: 0,
     left: 0,
-    width: 200,
-    height: "100%",
-    backgroundColor: "#1055a0",
-    paddingTop: 50,
-    paddingHorizontal: 10,
-    zIndex: 1000,
+    bottom: 0,
+    zIndex: 10,
+    elevation: 10,
   },
-  sidebarButton: {
-    width: "100%",
-    marginVertical: 8,
-    paddingVertical: 12,
-    borderRadius: 8,
-    backgroundColor: "#0c3d70",
+  background: {
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    height:250,
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center"
+
   },
-  sidebarButtonText: {
-    fontSize: 14,
+  overlay: {
+    width:"100%",
+    height:"100%",
+    backgroundColor: "rgba(0, 0, 0, 0.2)", 
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  texto: {
+    width:300,
+    fontSize: 25,
     color: "#fff",
-    marginLeft: 8,
-  },
-  closeButton: {
-    alignSelf: "flex-end",
+    fontWeight: "bold",
+    textAlign: "center",
     marginBottom: 20,
+  },
+  boton: {
+    width:100,
+    borderRadius: 8,
+    backgroundColor: "#bb1212",
+  },
+  botonTexto: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
