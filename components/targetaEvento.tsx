@@ -1,6 +1,9 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View ,Alert} from "react-native";
 
 import { useState } from "react";
+
+
+//priedades de cada evento y las funciones qu ese puede hacer
 
 interface EventoTargetaPropiedades {
     nombreEvento:string;
@@ -41,7 +44,6 @@ export default function TargetaEvento({
     const [expandido, setExpandido] = useState(false);
     
     
-    
     return (
     <View style={styles.card}>
       {/* parte siempre visible */}
@@ -52,10 +54,10 @@ export default function TargetaEvento({
       </View>
 
       <Text style={styles.fecha}>
-        📅 {fecha} | ⏰ {horaInicio} - {horaFin}
+         {fecha} | {horaInicio} - {horaFin}
       </Text>
 
-      {/* BOTÓN EXPANDIR */}
+      {/* boton para expandir*/}
       <Pressable
         style={styles.detallesBtn}
         onPress={() => setExpandido(!expandido)}
@@ -66,7 +68,7 @@ export default function TargetaEvento({
 
       </Pressable>
 
-      {/* CONTENIDO OCULTO */}
+      {/* cotenido oculto*/}
       {expandido && (
         <View style={styles.extraInfo}>
           <Text style={styles.description}>{descripcionEvento}</Text>
@@ -106,11 +108,10 @@ export default function TargetaEvento({
 
 const styles = StyleSheet.create({
   card: {
+    width:350,
     backgroundColor: "#fff",
     padding: 16,
     borderRadius: 14,
-    marginVertical: 10,
-    elevation: 4,
   },
 
   header: {

@@ -1,18 +1,33 @@
-import { router } from "expo-router";
-import React from "react";
-import { Button, Text, View } from "react-native";
+import { useRouter } from "expo-router";
+import { useState } from "react";
+import { StyleSheet, View } from "react-native";
+import Header from "../components/header";
+import Sidebar from "../components/sidebar";
+
+
 
 export default function HomeView() {
+  const [showSidebar, setShowSidebar] = useState(false);
+  const router = useRouter();
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ fontSize: 26, marginBottom: 20 }}>vista admin</Text>
+    <View style={styles.container}>
+      <Header title="Admin" onMenuPress={() => setShowSidebar(!showSidebar)} />
 
 
 
-      <Button
-        title="Cerrar sesión"
-        onPress={() => router.push("/login")}
-      />
+      {showSidebar && (
+              <Sidebar
+                onClose={() => setShowSidebar(false)}
+              />
+            )}
     </View>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f2f2f2",
+  },
+
+});
+

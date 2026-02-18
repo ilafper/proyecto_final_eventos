@@ -6,6 +6,8 @@ import CustomButton from "../components/botonBoton";
 import Header from "../components/header";
 
 import Sidebar from "../components/sidebar";
+
+
 export default function Home() {
   const [showSidebar, setShowSidebar] = useState(false);
   const router = useRouter();
@@ -28,7 +30,7 @@ export default function Home() {
       </ImageBackground>
 
       
-      {/* Sidebar flotante */}
+      {/* sidebard */}
       {showSidebar && (
         <Sidebar
           onClose={() => setShowSidebar(false)}

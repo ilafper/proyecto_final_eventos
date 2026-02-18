@@ -10,7 +10,7 @@ export const login_register = {
       const respuesta = await api.post('api/login', datos_login);
       return {
         success: true,
-        message: respuesta.data.message,
+        message: respuesta.message,
         //devolver el usuario
         user: respuesta.data.user
       };
@@ -22,7 +22,7 @@ export const login_register = {
       };
     }
   },
-  // lo mismo pero con el registro, mandamos los datos del formu del registro
+  // lo mismo pero con el registro, mandamos los datos del formu
   register: async (datos) => {
     try {
       const respuesta = await api.post('api/crearusuario', datos);
