@@ -1,9 +1,12 @@
-import { Pressable, StyleSheet, Text, View ,Alert} from "react-native";
-
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
+
+import useDatosUsuario from "../hooks/usuarioDatos";
 
 
 //priedades de cada evento y las funciones qu ese puede hacer
+
 
 interface EventoTargetaPropiedades {
     nombreEvento:string;
@@ -33,14 +36,13 @@ export default function TargetaEvento({
   horaInicio,
   horaFin,
   estado,
-  rol = "user",
   code_Evento,
   editar,
   eliminar,
   apuntarse,
 }: EventoTargetaPropiedades) {
     
-    
+    const usuario = useDatosUsuario();
     const [expandido, setExpandido] = useState(false);
     
     
@@ -74,18 +76,18 @@ export default function TargetaEvento({
           <Text style={styles.description}>{descripcionEvento}</Text>
 
           <Text style={styles.plazas}>
-            👥 Plazas: {PlazasDisponibles} / {plazasTotales}
+             Plazas: {PlazasDisponibles} / {plazasTotales}
           </Text>
 
           {/* ACCIONES SEGÚN ROL */}
           <View style={styles.actions}>
-            {rol === "user" && (
+            {usuario?.rol === "user" && (
               <Pressable  style={styles.btnPrimary} onPress={apuntarse}>
                 <Text style={styles.btnText}>Apuntarse</Text>
               </Pressable>
             )}
 
-            {rol === "admin" && (
+            {usuario?.rol === "admin" && (
               <>
                 <Pressable style={styles.btnEdit} onPress={editar}>
                   <Text style={styles.btnText}>Editar</Text>

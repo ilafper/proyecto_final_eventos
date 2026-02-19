@@ -1,7 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import { useEffect } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/botonBoton";
 import useDatosUsuario from "../hooks/usuarioDatos";
@@ -35,7 +34,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
         <Text style={styles.userEmail}>{usuario?.correo || ""}</Text>
       </View>
 
-      {/* Botones según rol directamente desde hook */}
+      
       <View style={styles.menuButtons}>
         {usuario?.rol === "user" && (
           <>
@@ -62,7 +61,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
             />
           </>
         )}
-
+        {/* sidebard del admin */}
         {usuario?.rol === "admin" && (
           <>
             <CustomButton
@@ -73,14 +72,14 @@ export default function Sidebar({ onClose }: SidebarProps) {
               textStyle={styles.sidebarButtonText}
             />
             <CustomButton
-              title="Gestionar Eventos"
+              title="Gestion Eventos"
               onPress={() => router.push("/gestionEventos")}
               icon={<MaterialIcons name="edit-calendar" size={24} color="#2e2bff" />}
               style={styles.sidebarButton}
               textStyle={styles.sidebarButtonText}
             />
             <CustomButton
-              title="Reservas Admin"
+              title="Gestion Reservas"
               onPress={() => router.push("/gestionReservas")}
               icon={<MaterialIcons name="list-alt" size={24} color="#2e2bff" />}
               style={styles.sidebarButton}
@@ -95,8 +94,9 @@ export default function Sidebar({ onClose }: SidebarProps) {
         <CustomButton
           title="Salir"
           onPress={handleLogout}
-          icon={<MaterialIcons name="logout" size={24} color="#3f3feb" />}
-          textStyle={styles.sidebarButtonText}
+          icon={<MaterialIcons name="logout" size={24} color="#ffffff" />}
+          style={styles.salirBoton}
+          textStyle={styles.salirText}
         />
       </View>
     </View>
@@ -124,18 +124,19 @@ const styles = StyleSheet.create({
   userInfo: { marginBottom: 30 },
   userName: { fontSize: 18, fontWeight: "bold", color: "#fff" },
   userEmail: { fontSize: 14, color: "#fff", marginTop: 2 },
-  menuButtons: { flex: 1 },
+  menuButtons: { flex: 1 , gap:10},
   sidebarButton: {
+    display:"flex",
     width: "100%",
-    marginVertical: 8,
-    paddingVertical: 12,
     borderRadius: 8,
     backgroundColor: "#ffffff",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
-    paddingLeft: 12,
+    justifyContent:"space-evenly",
+    paddingLeft: 1,
   },
-  sidebarButtonText: { fontSize: 14, color: "#2245e2", marginLeft: 10 },
-  logoutContainer: { marginTop: "auto", width: "100%", alignItems: "center", paddingBottom: 20 },
+  salirText: {color:"white"},
+  sidebarButtonText: { fontSize: 14, color: "#0a4bff", marginLeft: 2 },
+  logoutContainer: { marginTop: "auto", width: "100%", alignItems: "center", paddingBottom: 20, color:"white" },
+  salirBoton: {backgroundColor:"#fa2a0f", width:150, marginBottom:30}
 });

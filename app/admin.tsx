@@ -11,9 +11,7 @@ export default function HomeView() {
   const router = useRouter();
   return (
     <View style={styles.container}>
-      <Header title="Admin" onMenuPress={() => setShowSidebar(!showSidebar)} />
-
-
+      <Header title="Panel admin" onMenuPress={() => setShowSidebar(!showSidebar)} />
 
       {showSidebar && (
               <Sidebar

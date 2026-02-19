@@ -82,7 +82,7 @@ export default function Reservas() {
             horaInicio={cada_reserva.horaInicio}
             horaFin={cada_reserva.horaFin}
             estado={cada_reserva.estado}
-            cancelar={(cancelar) => cancelarReserva(cada_reserva.code_reserva)}
+            cancelar={() => cancelarReserva(cada_reserva.code_reserva)}
           />
         )}
       />

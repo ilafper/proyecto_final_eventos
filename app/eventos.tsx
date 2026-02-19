@@ -41,7 +41,7 @@ export default function eventos() {
     //             horaFin:cada_evento.horaFin,
     //         }
 
-
+    // apuntarse evento
     const apuntarseEvento = async (reserva_nueva: any)=> {
         console.log("reserva nueva", reserva_nueva);
         const respuesta = await eventosApi.apuntarseEvento(reserva_nueva);
@@ -76,6 +76,7 @@ export default function eventos() {
       <Header title="Eventos" onMenuPress={() => setShowSidebar(!showSidebar)} />
         {/* como un bocle for para mostrar los eventos en sus targetas */}
           <FlatList
+              // coge la "lista de eventos que le pasamos de cargar los eventos"
               data={eventos}
               keyExtractor={(cada_evento) => cada_evento.code_Evento}
               contentContainerStyle={{
@@ -89,6 +90,7 @@ export default function eventos() {
               }}
 
               renderItem={({ item: cada_evento }) => (
+                  // llamar al compoente de targeta y carga los datos y se mostrar con el tilo que le pusimos en el componente
                   <TargetaEvento
                       nombreEvento={cada_evento.nombreEvento}
                       descripcionEvento={cada_evento.descripcionEvento}
@@ -100,8 +102,7 @@ export default function eventos() {
                       plazasTotales={cada_evento.plazasTotales}
                       code_Evento={cada_evento.code_Evento}
                       rol="user"
-                      apuntarse={() =>apuntarseEvento({codigo_evento: cada_evento.code_Evento, nombre_evento: cada_evento.nombreEvento,fecha: cada_evento.fecha,horaInicio: cada_evento.horaInicio,horaFin: cada_evento.horaFin, code_usuario: usuario?.code_user})
-}
+                      apuntarse={() =>apuntarseEvento({codigo_evento: cada_evento.code_Evento, nombre_evento: cada_evento.nombreEvento,fecha: cada_evento.fecha,horaInicio: cada_evento.horaInicio,horaFin: cada_evento.horaFin, code_usuario: usuario?.code_user})}
 
                   />
               )}
