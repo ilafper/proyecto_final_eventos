@@ -11,6 +11,8 @@ export default function eventos() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [eventos, setEventos] = useState([]);
   const usuario = useDatosUsuario();
+
+  
   console.log("lalalal");
   
   console.log("datos user",usuario);

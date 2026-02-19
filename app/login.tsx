@@ -19,7 +19,6 @@ export default function LoginView() {
         };
         //funcion del archivo de api
         const res = await login_register.login(datos_login);
-
         if (res.success) {
             Alert.alert("Exito", res.message);
             let usuario= res.user
