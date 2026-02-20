@@ -81,20 +81,19 @@ export const eventosApi = {
 
 
   modiEvento: async (eventoActualizado) => {
-    console.log("modi evento", eventoActualizado);
+    console.log("modi evento datos", eventoActualizado);
     
 
     try {
-      const respuesta = await api.put(`/api/modi/eventos/`);
-      console.log(respuesta.mensaje);
+      const respuesta = await api.put(`/api/modievento`, eventoActualizado);
+      console.log(respuesta);
       return {
         success: true,
         mensaje: respuesta.data.mensaje,
       };
-      
-    } catch (error) {
-      console.log("Error reservas crear", error.response?.data);
 
+    } catch (error) {
+      console.log("Error modi evento", error.response?.data)
       return {
         success: false,
         error: error.response?.data.error || "Error crear evento",

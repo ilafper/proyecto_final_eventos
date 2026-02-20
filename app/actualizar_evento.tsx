@@ -5,11 +5,15 @@ import { StyleSheet, TextInput, View } from "react-native";
 import CustomButton from "../components/botonBoton";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
+
+import { eventosApi } from "../api/eventos";
+
 export default function ActuEevento() {
   const [showSidebar, setShowSidebar] = useState(false);
   // recoger los datos de param
   const params = useLocalSearchParams();
 
+  const [code_evento] = useState(params.code_evento as string);
   const [nombreEvento, setNombre] = useState(params.nombreEvento as string);
 
   const [descripcionEvento, setdesc] = useState(
@@ -31,6 +35,7 @@ export default function ActuEevento() {
 
   // actualizar evento
   const actualizarEvento = async (
+    code_evento: string,
     nombreEvento: string,
     descripcionEvento: string,
     fechaDate: Date,
@@ -38,6 +43,7 @@ export default function ActuEevento() {
     horaFin: string,
   ) => {
     console.log(
+      code_evento,
       nombreEvento,
       descripcionEvento,
       fechaDate,
@@ -45,11 +51,30 @@ export default function ActuEevento() {
       horaFin,
     );
 
-
-
-
-
+    let eventoActualizado = {
+      code_evento,
+      nombreEvento,
+      descripcionEvento,
+      fechaDate,
+      horaInicio,
+      horaFin,
+    }
+    console.log( eventoActualizado);
     
+    const respuesta = await eventosApi.modiEvento(eventoActualizado);
+    console.log("modi evento  evento");
+    console.log(respuesta);
+    if (respuesta.success) {
+      console.log("sisisi");
+      console.log(respuesta.success);
+
+    } else {
+      console.log("Error", respuesta.error);
+    }
+
+
+
+
 
   };
 
@@ -167,6 +192,7 @@ export default function ActuEevento() {
           title="Modificar evento"
           onPress={() =>
             actualizarEvento(
+              code_evento,
               nombreEvento,
               descripcionEvento,
               fechaDate,
