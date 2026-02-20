@@ -18,9 +18,9 @@ export default function ActuEevento() {
 
   const [fecha, setFecha] = useState(params.fecha as string);
 
-  const { horaInicio } = useLocalSearchParams();
+  const [horaInicio, setHoraInicio] = useState(params.horaInicio as string);
 
-  const { horaFin } = useLocalSearchParams();
+  const [horaFin, setHoraFin] = useState(params.horaFin as string);
 
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -28,12 +28,29 @@ export default function ActuEevento() {
 
   const [showHoraFinPicker, setShowHoraFinPicker] = useState(false);
 
+
+  // actualizar evento
   const actualizarEvento = async (
     nombreEvento: string,
     descripcionEvento: string,
     fechaDate: Date,
+    horaInicio: string,
+    horaFin: string,
   ) => {
-    console.log(nombreEvento, descripcionEvento, fechaDate);
+    console.log(
+      nombreEvento,
+      descripcionEvento,
+      fechaDate,
+      horaInicio,
+      horaFin,
+    );
+
+
+
+
+
+    
+
   };
 
   console.log("fecha modi", fecha);
@@ -82,10 +99,80 @@ export default function ActuEevento() {
           />
         )}
 
+        {/* hora de inicio */}
+
+        <TextInput
+          placeholder="Hora inicio"
+          value={horaInicio}
+          onFocus={() => setShowHoraInicioPicker(true)}
+          style={styles.input}
+        />
+
+        {showHoraInicioPicker && (
+          <DateTimePicker
+            //siempre devuelve en formato date Iso
+            value={new Date()}
+            mode="time"
+            display="default"
+            onChange={(event, selectedTime) => {
+              setShowHoraInicioPicker(false);
+              if (selectedTime) {
+                //pasar la hora inicio de formato date a por ejemplo "22:12 que por defecto el de eleigir mediante un reloj es formato date aunque diga time"
+                const horas = selectedTime
+                  .getHours()
+                  .toString()
+                  .padStart(2, "0");
+                const minutos = selectedTime
+                  .getMinutes()
+                  .toString()
+                  .padStart(2, "0");
+                setHoraInicio(`${horas}:${minutos}`);
+              }
+            }}
+          />
+        )}
+
+        <TextInput
+          placeholder="Hora Fin"
+          value={horaFin}
+          onFocus={() => setShowHoraFinPicker(true)}
+          style={styles.input}
+        />
+
+        {showHoraFinPicker && (
+          <DateTimePicker
+            //siempre devuelve en formato date Iso
+            value={new Date()}
+            mode="time"
+            display="default"
+            onChange={(event, selectedTime) => {
+              setShowHoraFinPicker(false);
+              if (selectedTime) {
+                //pasar la hora inicio de formato date a por ejemplo "22:12 que por defecto el de eleigir mediante un reloj es formato date aunque diga time"
+                const horas = selectedTime
+                  .getHours()
+                  .toString()
+                  .padStart(2, "0");
+                const minutos = selectedTime
+                  .getMinutes()
+                  .toString()
+                  .padStart(2, "0");
+                setHoraFin(`${horas}:${minutos}`);
+              }
+            }}
+          />
+        )}
+
         <CustomButton
-          title="Crear evento"
+          title="Modificar evento"
           onPress={() =>
-            actualizarEvento(nombreEvento, descripcionEvento, fechaDate)
+            actualizarEvento(
+              nombreEvento,
+              descripcionEvento,
+              fechaDate,
+              horaInicio,
+              horaFin,
+            )
           }
           style={styles.estiloBoton}
         />

@@ -26,7 +26,7 @@ export default function NuevoEventoFormu() {
 
   //const plazas_maximas = 100;
 
-  //creacionEvento(nombreEvento,descripcionEvento,plazasTotales,fecha,horaInicio,horaFin)}
+  // creacionEvento(nombreEvento,descripcionEvento,plazasTotales,fecha,horaInicio,horaFin)}
   // Función para enviar formulario
 
   const creacionEvento = async (
@@ -106,7 +106,7 @@ export default function NuevoEventoFormu() {
           style={styles.input}
         />
         
-        
+
         {/* input de fecha cambiado  con el pakete de fecha para poder elegir como sifuese calendario */}
         <TextInput
           placeholder="Fecha"
