@@ -99,6 +99,7 @@ export default function GestionEventos() {
                       code_Evento={cada_evento.code_Evento}
                       rol="admin"
                       eliminar={() =>eliminarEvento(cada_evento.code_Evento)}
+                      
                   />
               )}
           />

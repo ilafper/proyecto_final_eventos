@@ -44,7 +44,7 @@ export default function TargetaEvento({
     
     const usuario = useDatosUsuario();
     const [expandido, setExpandido] = useState(false);
-    const router = useRouter();
+    const router = useRouter() as any;
     
     return (
     <View style={styles.card}>
@@ -106,8 +106,14 @@ export default function TargetaEvento({
                 />
 
                 <CustomButton
-                  title="Ver reservas"
-                  onPress={() => router.push("/reservasEvento")}
+                  title="Ver reservas"  
+                  onPress={() =>
+                    router.push({
+                      pathname: "/reservaEvento/[code_evento]", 
+                      // especificar el parametro del codifgo evento
+                      params: { code_evento: code_Evento },
+                    })
+                  }
                   icon={<MaterialIcons name="visibility" size={15} color="#ffffff" />}
                   style={styles.estiloBtonReservas}
                   textStyle={styles.textoReservas}

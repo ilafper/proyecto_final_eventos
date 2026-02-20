@@ -35,7 +35,8 @@ export default function Reservas() {
   /* Cancelar reserva */
     const cancelarReserva = async (code_reserva: string) => {
         console.log("reserva a eliminar", code_reserva);
-
+        
+        // alert para confirmar
         Alert.alert(
             "Cancelar reserva",
             "¿Seguro que quieres cancelar esta reserva?",
