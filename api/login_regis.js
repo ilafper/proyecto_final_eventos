@@ -9,7 +9,6 @@ export const login_register = {
       return {
         success: true,
         message: respuesta.data.message,
-        //devolver el usuario
         user: respuesta.data.user,
       };
     } catch (error) {

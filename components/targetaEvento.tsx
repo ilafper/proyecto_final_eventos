@@ -1,10 +1,9 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useState } from "react";
-
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import CustomButton from "../components/botonBoton";
 import useDatosUsuario from "../hooks/usuarioDatos";
-
-
 //priedades de cada evento y las funciones qu ese puede hacer
 
 
@@ -23,7 +22,7 @@ interface EventoTargetaPropiedades {
     editar?: () => void;
     eliminar?: () => void;
     apuntarse?: () => void;
-    verDetalles?: () => void;
+    verReservas?: () => void;
 }
 
 
@@ -40,11 +39,12 @@ export default function TargetaEvento({
   editar,
   eliminar,
   apuntarse,
+  verReservas,
 }: EventoTargetaPropiedades) {
     
     const usuario = useDatosUsuario();
     const [expandido, setExpandido] = useState(false);
-    
+    const router = useRouter();
     
     return (
     <View style={styles.card}>
@@ -89,13 +89,29 @@ export default function TargetaEvento({
 
             {usuario?.rol === "admin" && (
               <>
-                <Pressable style={styles.btnEdit} onPress={editar}>
-                  <Text style={styles.btnText}>Editar</Text>
-                </Pressable>
+                
+                <CustomButton
+                  title="Editar"
+                  onPress={editar}
+                  icon={<MaterialIcons name="edit" size={15} color="#ffffff" />}
+                  style={styles.btnEdit}
+                  textStyle={styles.btnText}
+                />
+                <CustomButton
+                  title="Eliminar"
+                  onPress={eliminar}
+                  icon={<MaterialIcons name="delete-outline" size={15} color="#ffffff" />}
+                  style={styles.btnDelete}
+                  textStyle={styles.btnText}
+                />
 
-                <Pressable style={styles.btnDelete} onPress={eliminar}>
-                  <Text style={styles.btnText}>Eliminar</Text>
-                </Pressable>
+                <CustomButton
+                  title="Ver reservas"
+                  onPress={() => router.push("/reservasEvento")}
+                  icon={<MaterialIcons name="visibility" size={15} color="#ffffff" />}
+                  style={styles.estiloBtonReservas}
+                  textStyle={styles.textoReservas}
+                />
               </>
             )}
           </View>
@@ -162,8 +178,8 @@ const styles = StyleSheet.create({
 
   description: {
     fontSize: 14,
-    color: "#444",
-    marginBottom: 8,
+    color: "#333",
+    marginBottom: 5,
   },
 
   plazas: {
@@ -174,8 +190,7 @@ const styles = StyleSheet.create({
 
   actions: {
     flexDirection: "row",
-    gap: 10,
-    flexWrap: "wrap",
+    gap: 5,
   },
 
   btnPrimary: {
@@ -197,6 +212,15 @@ const styles = StyleSheet.create({
   },
 
   btnText: {
+    color: "#fff",
+    fontWeight: "600",
+  },
+  estiloBtonReservas: {
+    backgroundColor:"#174dfd",
+    padding: 10,
+    borderRadius: 10,
+  },
+  textoReservas: {
     color: "#fff",
     fontWeight: "600",
   },

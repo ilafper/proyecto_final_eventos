@@ -11,7 +11,7 @@ import {
 interface Props {
   title?: string;
   icon?: JSX.Element;
-  onPress: () => void;
+  onPress?: () => void;
   style?: ViewStyle;
   textStyle?: TextStyle;
 }

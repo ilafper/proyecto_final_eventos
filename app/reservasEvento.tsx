@@ -5,11 +5,11 @@ import Sidebar from "../components/sidebar";
 
 
 
-export default function HomeView() {
+export default function reservasEventos() {
   const [showSidebar, setShowSidebar] = useState(false);
   return (
     <View style={styles.container}>
-      <Header title="Panel admin" onMenuPress={() => setShowSidebar(!showSidebar)} />
+      <Header title="Reservas evento" onMenuPress={() => setShowSidebar(!showSidebar)} />
 
       {showSidebar && (
               <Sidebar

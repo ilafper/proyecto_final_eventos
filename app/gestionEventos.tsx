@@ -12,9 +12,7 @@ export default function GestionEventos() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [eventos, setEventos] = useState([]);
   const usuario = useDatosUsuario();
-  console.log("useradmin");
   
-  console.log("datos admin",usuario);
   
   //funcion para cargar eventos
     const cargaEventos= async () => {
@@ -32,6 +30,25 @@ export default function GestionEventos() {
         }
 
     };
+
+    const eliminarEvento= async (code_evento:string) => {
+        //console.log(code_evento);
+        
+        const respuesta= await eventosApi.eliminarEvento(code_evento);
+        console.log("evento eleiminar");
+        
+        console.log(respuesta);
+        
+        if (respuesta.success) {
+    
+        }else {
+            console.log("Error", respuesta.error);
+            Alert.alert("Error", respuesta.error);
+        }
+
+    };
+
+
 
     //ejecuatr al entrar en la vista
     useEffect(() => {
@@ -81,6 +98,7 @@ export default function GestionEventos() {
                       plazasTotales={cada_evento.plazasTotales}
                       code_Evento={cada_evento.code_Evento}
                       rol="admin"
+                      eliminar={() =>eliminarEvento(cada_evento.code_Evento)}
                   />
               )}
           />
