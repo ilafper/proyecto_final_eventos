@@ -31,6 +31,8 @@ export default function eventos() {
     }
   };
 
+
+  
   //  const reserva_nueva={
   //             codigo_evento: cada_evento.code_Evento,
   //             nombre_evento:cada_evento.nombreEvento,

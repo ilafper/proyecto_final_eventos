@@ -78,4 +78,29 @@ export const eventosApi = {
       };
     }
   },
+
+
+  modiEvento: async (eventoActualizado) => {
+    console.log("modi evento", eventoActualizado);
+    
+
+    try {
+      const respuesta = await api.put(`/api/modi/eventos/`);
+      console.log(respuesta.mensaje);
+      return {
+        success: true,
+        mensaje: respuesta.data.mensaje,
+      };
+      
+    } catch (error) {
+      console.log("Error reservas crear", error.response?.data);
+
+      return {
+        success: false,
+        error: error.response?.data.error || "Error crear evento",
+      };
+    }
+  },
+
+  
 };
