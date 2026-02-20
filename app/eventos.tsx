@@ -7,6 +7,11 @@ import TargetaEvento from "../components/targetaEvento";
 import useDatosUsuario from "../hooks/usuarioDatos";
 
 
+
+
+
+
+
 export default function eventos() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [eventos, setEventos] = useState([]);
@@ -53,14 +58,10 @@ export default function eventos() {
         if (respuesta.success) {
             Alert.alert(respuesta.mensaje);
             cargaEventos();
-
         } else {
             console.log("Error", respuesta.error);
             Alert.alert("Error", respuesta.error);
         }
-
-
-
     };
 
 

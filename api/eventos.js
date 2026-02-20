@@ -39,6 +39,8 @@ export const eventosApi = {
     }
   },
 
+  
+  //craer eventos nuevo en admin
   crearEvento: async (nuevo_evento) => {
     console.log("nuevo evento en eventos.js", nuevo_evento);
 
