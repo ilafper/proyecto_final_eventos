@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/botonBoton";
 import useDatosUsuario from "../hooks/usuarioDatos";
+
+
 //priedades de cada evento y las funciones qu ese puede hacer
 
 
@@ -39,7 +41,6 @@ export default function TargetaEvento({
   editar,
   eliminar,
   apuntarse,
-  verReservas,
 }: EventoTargetaPropiedades) {
     
     const usuario = useDatosUsuario();
@@ -89,14 +90,22 @@ export default function TargetaEvento({
 
             {usuario?.rol === "admin" && (
               <>
-                
+              {/* los mismos que elimminar pero para actualizar */}
                 <CustomButton
                   title="Editar"
-                  onPress={editar}
+                  onPress={() =>
+                    router.push({
+                      pathname: "/actualizar_evento", 
+                      // especificar el parametro del codifgo evento
+                      params: { code_evento: code_Evento , nombreEvento:nombreEvento, descripcionEvento:descripcionEvento, fecha:fecha, horaInicio:horaInicio, horaFin:horaFin },
+                    })
+                  }
+
                   icon={<MaterialIcons name="edit" size={15} color="#ffffff" />}
                   style={styles.btnEdit}
                   textStyle={styles.btnText}
                 />
+
                 <CustomButton
                   title="Eliminar"
                   onPress={eliminar}
@@ -104,7 +113,7 @@ export default function TargetaEvento({
                   style={styles.btnDelete}
                   textStyle={styles.btnText}
                 />
-
+                
                 <CustomButton
                   title="Ver reservas"  
                   onPress={() =>

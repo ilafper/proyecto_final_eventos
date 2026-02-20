@@ -45,6 +45,7 @@ export default function NuevoEventoFormu() {
       horaInicio,
       horaFin,
     );
+
     console.log(fecha);
 
     console.log("fecha fecha ", fecha.toLocaleDateString());
@@ -81,18 +82,21 @@ export default function NuevoEventoFormu() {
       />
 
       <View style={styles.formContainer}>
+        
         <TextInput
           placeholder="Nombre del evento"
           value={nombreEvento}
           onChangeText={setNombreEvento}
           style={styles.input}
         />
+
         <TextInput
           placeholder="Descripción del evento"
           value={descripcionEvento}
           onChangeText={setDescripcionEvento}
           style={styles.input}
         />
+
         <TextInput
           placeholder="Plazas totales"
           value={plazasTotales}
@@ -101,7 +105,8 @@ export default function NuevoEventoFormu() {
           keyboardType="numeric"
           style={styles.input}
         />
-
+        
+        
         {/* input de fecha cambiado  con el pakete de fecha para poder elegir como sifuese calendario */}
         <TextInput
           placeholder="Fecha"

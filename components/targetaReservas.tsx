@@ -1,19 +1,20 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-interface ReservaProps { 
-  code_reserva?:string;
-  nombreEvento: string;
+interface ReservaProps {
+  code_reserva?: string;
+  nombre_evento: string;
   fecha: string;
   horaInicio: string;
   horaFin: string;
   estado: string;
-  
-  cancelar?: () => void; // función para cancelar reserva
+  rol?: "user" | "admin";
+
+  cancelar?: () => void;
 }
 
 export default function TargetaReserva({
-  nombreEvento,
+  nombre_evento,
   fecha,
   horaInicio,
   horaFin,
@@ -23,38 +24,32 @@ export default function TargetaReserva({
 }: ReservaProps) {
   return (
     <View style={styles.card}>
-      
       {/*datos*/}
       <View style={styles.header}>
-        <Text style={styles.title}>{nombreEvento}</Text>
+        <Text style={styles.title}>{nombre_evento}</Text>
 
         <View style={styles.estadoBox}>
           <Text style={styles.estadoText}>{estado}</Text>
         </View>
       </View>
 
-      
-      <Text style={styles.info}>
-        {fecha}
-      </Text>
+      <Text style={styles.info}>{fecha}</Text>
 
       <Text style={styles.info}>
         {horaInicio} - {horaFin}
       </Text>
 
-      
       <Pressable style={styles.cancelBtn} onPress={cancelar}>
         <MaterialIcons name="cancel" size={20} color="#fff" />
         <Text style={styles.cancelText}>Cancelar reserva</Text>
       </Pressable>
     </View>
-
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    width:300,
+    width: 300,
     backgroundColor: "#fff",
     padding: 18,
     borderRadius: 16,
@@ -105,7 +100,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-
     backgroundColor: "#d9534f",
     paddingVertical: 12,
     borderRadius: 12,

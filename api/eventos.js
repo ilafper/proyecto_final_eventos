@@ -10,7 +10,6 @@ export const eventosApi = {
         eventos: respuesta.data.todos_eventos,
       };
     } catch (error) {
-
       //console.log("Error al obtener eventos:", error.response?.data);
 
       return {
@@ -39,14 +38,13 @@ export const eventosApi = {
     }
   },
 
-  
   //craer eventos nuevo en admin
   crearEvento: async (nuevo_evento) => {
     console.log("nuevo evento en eventos.js", nuevo_evento);
 
     try {
       const respuesta = await api.post("api/creareventos", nuevo_evento);
-      console.log(respuesta.mensaje); 
+      console.log(respuesta.mensaje);
       return {
         success: true,
         mensaje: respuesta.data.mensaje,
@@ -60,8 +58,6 @@ export const eventosApi = {
       };
     }
   },
-
-
 
   eliminarEvento: async (code_evento) => {
     console.log("nuevo evento en eventos.js", code_evento);

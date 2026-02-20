@@ -17,6 +17,8 @@ export default function LoginView() {
             correo,
             contraseña
         };
+
+        
         //funcion del archivo de api
         const res = await login_register.login(datos_login);
         if (res.success) {
