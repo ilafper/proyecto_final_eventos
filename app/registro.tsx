@@ -6,19 +6,15 @@ import { login_register } from "../api/login_regis";
 import CustomButton from "../components/botonBoton";
 
 export default function RegisterView() {
-    //campos de registro con setNombreCampo para "recordar"
     const [nombre, setNombre] = useState("");
     const [apellidos, setApellidos] = useState("");
     const [correo, setEmail] = useState("");
     const [contraseña, setPassword] = useState("");
     const [contraseña2, setPassword2] = useState("");
-    //para oculatar y mostrar contraseñas por defecto estan ocultas
     const [showPassword, setShowPassword] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
 
-    // Funcion para registrarse
     const registro = async () => {
-        //datos del registro
         const datos = {
             nombre,
             apellidos,
@@ -30,85 +26,125 @@ export default function RegisterView() {
         const res = await login_register.register(datos);
 
         if (res.success) {
-            Alert.alert("yupi", res.message);
+            Alert.alert("¡Bienvenido!", res.message);
             router.push("/login");
         } else {
             Alert.alert("Error", res.error);
         }
     };
 
-
     return (
-
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" />
-            <Text style={styles.title}>Registro</Text>
-
-            <TextInput
-                placeholder="Nombre"
-                value={nombre}
-                onChangeText={setNombre}
-                style={styles.input}
-            />
-
-            <TextInput
-                placeholder="Apellidos"
-                value={apellidos}
-                onChangeText={setApellidos}
-                style={styles.input}
-            />
-
-            <TextInput
-                placeholder="Email"
-                value={correo}
-                onChangeText={setEmail}
-                style={styles.input}
-            />
-
-            {/* juntar el input del contaseñña con el de boton */}
-            <View style={styles.passwordContainer}>
-                <TextInput
-                    placeholder="Contraseña"
-                    value={contraseña}
-                    onChangeText={setPassword}
-                    style={styles.passwordInput}
-                    secureTextEntry={!showPassword}
-                />
-                <Pressable onPress={() => setShowPassword(!showPassword)} style={styles.icon}>
-                    <MaterialIcons
-                        name={showPassword ? "visibility" : "visibility-off"}
-                        size={24}
-                        color="gray"
-                    />
-                </Pressable>
+            
+            {/* Header decorativo */}
+            <View style={styles.headerDecoration}>
+                <View style={styles.circle1} />
+                <View style={styles.circle2} />
             </View>
 
-            {/* Repetir contraseña */}
-            <View style={styles.passwordContainer}>
-                <TextInput
-                    placeholder="Repite la contraseña"
-                    value={contraseña2}
-                    onChangeText={setPassword2}
-                    style={styles.passwordInput}
-                    secureTextEntry={!showPassword2}
-                />
-                <Pressable onPress={() => setShowPassword2(!showPassword2)} style={styles.icon}>
-                    <MaterialIcons
-                        name={showPassword2 ? "visibility" : "visibility-off"}
-                        size={24}
-                        color="gray"
+            {/* Contenido principal centrado */}
+            <View style={styles.centeredContent}>
+                {/* Título */}
+                <Text style={styles.welcomeText}>Crear cuenta</Text>
+                <Text style={styles.subtitle}>Regístrate para comenzar</Text>
+
+                {/* Formulario */}
+                <View style={styles.formContainer}>
+                    {/* Nombre */}
+                    <View style={styles.inputContainer}>
+                        <MaterialIcons name="person" size={20} color="#3433CD" style={styles.inputIcon} />
+                        <TextInput
+                            placeholder="Nombre"
+                            placeholderTextColor="#aaa"
+                            value={nombre}
+                            onChangeText={setNombre}
+                            style={styles.input}
+                        />
+                    </View>
+
+                    {/* Apellidos */}
+                    <View style={styles.inputContainer}>
+                        <MaterialIcons name="people" size={20} color="#3433CD" style={styles.inputIcon} />
+                        <TextInput
+                            placeholder="Apellidos"
+                            placeholderTextColor="#aaa"
+                            value={apellidos}
+                            onChangeText={setApellidos}
+                            style={styles.input}
+                        />
+                    </View>
+
+                    {/* Email */}
+                    <View style={styles.inputContainer}>
+                        <MaterialIcons name="email" size={20} color="#3433CD" style={styles.inputIcon} />
+                        <TextInput
+                            placeholder="Correo electrónico"
+                            placeholderTextColor="#aaa"
+                            value={correo}
+                            onChangeText={setEmail}
+                            style={styles.input}
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                        />
+                    </View>
+
+                    {/* Contraseña */}
+                    <View style={styles.inputContainer}>
+                        <MaterialIcons name="lock" size={20} color="#3433CD" style={styles.inputIcon} />
+                        <TextInput
+                            placeholder="Contraseña"
+                            placeholderTextColor="#aaa"
+                            value={contraseña}
+                            onChangeText={setPassword}
+                            style={[styles.input, { flex: 1 }]}
+                            secureTextEntry={!showPassword}
+                        />
+                        <Pressable onPress={() => setShowPassword(!showPassword)}>
+                            <MaterialIcons
+                                name={showPassword ? "visibility" : "visibility-off"}
+                                size={20}
+                                color="#3433CD"
+                            />
+                        </Pressable>
+                    </View>
+
+                    {/* Repetir contraseña */}
+                    <View style={styles.inputContainer}>
+                        <MaterialIcons name="lock-outline" size={20} color="#3433CD" style={styles.inputIcon} />
+                        <TextInput
+                            placeholder="Repite la contraseña"
+                            placeholderTextColor="#aaa"
+                            value={contraseña2}
+                            onChangeText={setPassword2}
+                            style={[styles.input, { flex: 1 }]}
+                            secureTextEntry={!showPassword2}
+                        />
+                        <Pressable onPress={() => setShowPassword2(!showPassword2)}>
+                            <MaterialIcons
+                                name={showPassword2 ? "visibility" : "visibility-off"}
+                                size={20}
+                                color="#3433CD"
+                            />
+                        </Pressable>
+                    </View>
+
+                    {/* Botón de registro */}
+                    <CustomButton 
+                        title="Registrarme" 
+                        onPress={registro} 
+                        style={styles.registerButton}
+                        textStyle={styles.registerButtonText}
                     />
-                </Pressable>
-            </View>
+                </View>
 
-            {/* Boton para registrarse */}
-            <CustomButton title="Registrarme" onPress={registro} />
-
-            <View style={{ marginTop: 10, flexDirection: "row", gap: 5 }}>
-                <Text>Ya tienes cuenta?</Text>
-                <Text style={styles.enlace} onPress={() => router.push("/login")}>
-                    Inicia Sesión
-                </Text>
+                {/* Enlace a login */}
+                <View style={styles.loginContainer}>
+                    <Text style={styles.loginText}>¿Ya tienes cuenta? </Text>
+                    <Pressable onPress={() => router.push("/login")}>
+                        <Text style={styles.loginLink}>Inicia Sesión</Text>
+                    </Pressable>
+                </View>
             </View>
         </View>
     );
@@ -117,40 +153,112 @@ export default function RegisterView() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 20,
-        borderColor: "red",
-        borderWidth: 1
+        backgroundColor: '#fff',
     },
-    title: {
-        fontSize: 28,
-        marginBottom: 20
+    headerDecoration: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: 200,
+        overflow: 'hidden',
+    },
+    circle1: {
+        position: 'absolute',
+        top: -50,
+        right: -50,
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        backgroundColor: '#3433CD10',
+    },
+    circle2: {
+        position: 'absolute',
+        top: 30,
+        left: -30,
+        width: 150,
+        height: 150,
+        borderRadius: 75,
+        backgroundColor: '#3433CD10',
+    },
+    centeredContent: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 24,
+        paddingTop: 40,
+    },
+    welcomeText: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 8,
+        textAlign: 'center',
+    },
+    subtitle: {
+        fontSize: 16,
+        color: '#888',
+        marginBottom: 30,
+        textAlign: 'center',
+    },
+    formContainer: {
+        width: '100%',
+        maxWidth: 350,
+    },
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#180db975',
+        borderRadius: 16,
+        paddingHorizontal: 16,
+        marginBottom: 16,
+        backgroundColor: '#ffffff',
+        height: 56,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.05,
+        shadowRadius: 2,
+        elevation: 1,
+    },
+    inputIcon: {
+        marginRight: 12,
     },
     input: {
-        width: "100%",
-        borderWidth: 1,
-        padding: 10,
-        marginVertical: 8,
-        borderRadius: 8
-    },
-    passwordContainer: {
-        width: "100%",
-        flexDirection: "row",
-        alignItems: "center",
-        borderWidth: 1,
-        borderRadius: 8,
-        marginVertical: 8,
-    },
-    passwordInput: {
         flex: 1,
-        padding: 10,
+        fontSize: 17,
+        color: '#00000098',
+        
     },
-    icon: {
-        paddingHorizontal: 10,
+    registerButton: {
+        backgroundColor: '#3433CD',
+        borderRadius: 16,
+        height: 56,
+        shadowColor: '#3433CD',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+        elevation: 4,
+        marginTop: 10,
+        marginBottom: 20,
     },
-    enlace: {
-        color: "blue",
-        fontWeight: "bold"
-    }
+    registerButtonText: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#fff',
+    },
+    loginContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 10,
+    },
+    loginText: {
+        color: '#888',
+        fontSize: 14,
+    },
+    loginLink: {
+        color: '#3433CD',
+        fontSize: 14,
+        fontWeight: '600',
+    },
 });

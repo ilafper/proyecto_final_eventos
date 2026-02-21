@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Alert, StyleSheet, TextInput, View } from "react-native";
 import { eventosApi } from "../api/eventos";
 import CustomButton from "../components/botonBoton";
+import FooterMovil from "../components/footer";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
-
 export default function NuevoEventoFormu() {
   const [showSidebar, setShowSidebar] = useState(false);
   //const router = useRouter();
@@ -206,6 +206,7 @@ export default function NuevoEventoFormu() {
       </View>
 
       {showSidebar && <Sidebar onClose={() => setShowSidebar(false)} />}
+      <FooterMovil />
     </View>
   );
 }

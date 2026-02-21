@@ -6,7 +6,7 @@ import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import TargetaEvento from "../components/targetaEvento";
 import useDatosUsuario from "../hooks/usuarioDatos";
-
+import FooterMovil from "../components/footer";
 export default function eventos() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [eventos, setEventos] = useState([]);
@@ -63,6 +63,10 @@ export default function eventos() {
     cargaEventos();
   }, [usuario]);
 
+
+
+
+
   return (
     <View style={styles.container}>
       {/* componete header con su titulo */}
@@ -113,6 +117,9 @@ export default function eventos() {
 
       {/* Sidebar flotante */}
       {showSidebar && <Sidebar onClose={() => setShowSidebar(false)} />}
+
+
+       <FooterMovil />
     </View>
   );
 }

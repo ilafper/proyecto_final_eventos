@@ -172,6 +172,7 @@ export default function ReservasEventos() {
 
 
       {showSidebar && <Sidebar onClose={() => setShowSidebar(false)} />}
+      <FooterSimple />
     </View>
   );
 }

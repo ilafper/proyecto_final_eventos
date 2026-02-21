@@ -8,6 +8,10 @@ import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import TargetaEvento from "../components/targetaEvento";
 import useDatosUsuario from "../hooks/usuarioDatos";
+import FooterMovil from "../components/footer";
+
+import FooterSimple from "../components/footer";
+
 export default function GestionEventos() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [eventos, setEventos] = useState([]);
@@ -82,9 +86,7 @@ export default function GestionEventos() {
                   marginTop:20,
                   gap:18,
                   alignItems: "center",
-                  borderWidth: 1,
-                  borderColor: "red",
-                  paddingBottom:100
+                  paddingBottom:150
               }}
 
               renderItem={({ item: cada_evento }) => (
@@ -111,6 +113,7 @@ export default function GestionEventos() {
           onClose={() => setShowSidebar(false)}
         />
       )}
+      <FooterMovil />
     </View>
   );
 }
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
         padding:0,
         margin:0,
         position: "absolute",
-        bottom: 80,
+        bottom: 120,
         right: 25,
         width: 65,
         height: 65,

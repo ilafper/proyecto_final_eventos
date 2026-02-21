@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import FooterMovil from "../components/footer";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
-
 
 
 export default function HomeView() {
@@ -16,6 +16,7 @@ export default function HomeView() {
                 onClose={() => setShowSidebar(false)}
               />
             )}
+      <FooterMovil />
     </View>
   );
 }

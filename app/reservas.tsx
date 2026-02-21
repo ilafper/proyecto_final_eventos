@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Alert, FlatList, StyleSheet, View } from "react-native";
 
 import { reservasApi } from "../api/reservas";
+import FooterMovil from "../components/footer";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import TargetaReserva from "../components/targetaReservas";
 import useDatosUsuario from "../hooks/usuarioDatos";
-
 export default function Reservas() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [reservas, setReservas] = useState([]);
@@ -88,7 +88,9 @@ export default function Reservas() {
 
       {/* Sidebar */}
       {showSidebar && <Sidebar onClose={() => setShowSidebar(false)} />}
+      <FooterMovil />
     </View>
+    
   );
 }
 
