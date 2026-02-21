@@ -58,18 +58,19 @@ export default function GestionEventos() {
 
 
   return (
+    
     <View style={styles.container}>
       {/* componete header con su titulo */}
       <Header title="Gestion eventos" onMenuPress={() => setShowSidebar(!showSidebar)} />
-
-
         <CustomButton
-              title=""
-              onPress={() => router.push("/nuevoEventoFormu")
-              }
-              icon={<MaterialIcons name="add" size={24} color="#ffffff" />}
-              style={styles.estilo}
-            />
+            title=""
+            onPress={() => router.push("/nuevoEventoFormu")
+            }
+            icon={<MaterialIcons name="add" size={30} color="#ffffff" />}
+            style={styles.estilo}
+        />
+
+        
 
 
         {/* como un bocle for para mostrar los eventos en sus targetas */}
@@ -99,7 +100,6 @@ export default function GestionEventos() {
                       code_Evento={cada_evento.code_Evento}
                       rol="admin"
                       eliminar={() =>eliminarEvento(cada_evento.code_Evento)}
-                      
                   />
               )}
           />
@@ -123,16 +123,16 @@ const styles = StyleSheet.create({
     },
 
     estilo: {
+        padding:0,
+        margin:0,
         position: "absolute",
         bottom: 80,
         right: 25,
         width: 65,
         height: 65,
-        borderRadius: 32,
+        borderRadius:50,
         backgroundColor: "#0e549e",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 999,
+        zIndex: 1,
     },
 
     estiloFinalizado: {

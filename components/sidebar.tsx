@@ -78,13 +78,6 @@ export default function Sidebar({ onClose }: SidebarProps) {
               style={styles.sidebarButton}
               textStyle={styles.sidebarButtonText}
             />
-            <CustomButton
-              title="Gestion Reservas"
-              onPress={() => router.push("/gestionReservas")}
-              icon={<MaterialIcons name="list-alt" size={24} color="#2e2bff" />}
-              style={styles.sidebarButton}
-              textStyle={styles.sidebarButtonText}
-            />
           </>
         )}
       </View>

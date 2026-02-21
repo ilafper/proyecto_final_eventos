@@ -1,6 +1,8 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-
+import CustomButton from "../components/botonBoton";
+import useDatosUsuario from "../hooks/usuarioDatos";
 interface ReservaProps {
   code_reserva?: string;
   nombre_evento: string;
@@ -9,8 +11,8 @@ interface ReservaProps {
   horaFin: string;
   estado: string;
   rol?: "user" | "admin";
-
   cancelar?: () => void;
+  cambiarEstado?: () => void;
 }
 
 export default function TargetaReserva({
@@ -21,7 +23,11 @@ export default function TargetaReserva({
   estado,
   code_reserva,
   cancelar,
+  cambiarEstado
 }: ReservaProps) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [estadoLocal, setEstadoLocal] = useState(estado); // estado viene de props
+  const usuario = useDatosUsuario();
   return (
     <View style={styles.card}>
       {/*datos*/}
@@ -38,11 +44,30 @@ export default function TargetaReserva({
       <Text style={styles.info}>
         {horaInicio} - {horaFin}
       </Text>
+      <View style={styles.actionsRservas}>
+        {usuario?.rol === "user" && (
+          <CustomButton
+            title="cancel"
+            onPress={cancelar}
+            icon={<MaterialIcons name="cancel" size={15} color="#ffffff" />}
+            style={styles.cancelBtn}
+            textStyle={styles.cancelText}
+          />
+        )}
 
-      <Pressable style={styles.cancelBtn} onPress={cancelar}>
-        <MaterialIcons name="cancel" size={20} color="#fff" />
-        <Text style={styles.cancelText}>Cancelar reserva</Text>
-      </Pressable>
+        {usuario?.rol === "admin" && (
+
+          <CustomButton
+            title="Cambiar estado"
+            onPress={cambiarEstado}
+            icon={<MaterialIcons name="edit" size={15} color="#ffffff" />}
+            style={styles.cancel}
+            textStyle={styles.cancelText}
+          />
+        )}
+
+      </View>
+      
     </View>
   );
 }
@@ -105,10 +130,30 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     gap: 8,
   },
+  cancel: {
+    width:230,
+    marginTop: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#d9534f",
+    paddingVertical: 12,
+    borderRadius: 12,
+    gap: 8,
+  },
 
   cancelText: {
     color: "#fff",
     fontWeight: "600",
     fontSize: 14,
   },
+
+  actionsRservas: {
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"center",
+    gap:20
+
+  },
+
 });

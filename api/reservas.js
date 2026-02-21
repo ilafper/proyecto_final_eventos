@@ -60,4 +60,26 @@ export const reservasApi = {
     }
   },
 
+  actualizarEstado: async (reserva_modi) => {
+    console.log("funcion movil",reserva_modi);
+    
+    try {
+      const respuesta = await api.put(`api/modiestadoreserva`, reserva_modi);
+        //console.log(respuesta);
+      return {
+        success: true,
+        mensaje: respuesta.data.mensaje,
+      };
+      
+    } catch (error) {
+      //console.log("Error al obtener eventos:", error.response?.data);
+
+      return {
+        success: false,
+        data: [],
+        error: error.response?.data.error || "Error actualizar",
+      };
+    }
+  },
+
 };

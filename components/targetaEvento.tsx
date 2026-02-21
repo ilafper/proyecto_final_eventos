@@ -106,7 +106,7 @@ export default function TargetaEvento({
                   onPress={() =>
                     router.push({
                       pathname: "/actualizar_evento",
-                      // especificar el parametro del codifgo evento
+                      // manadar los datos del evento para actualizar y rellenar el formi
                       params: { code_evento: code_Evento, nombreEvento: nombreEvento, descripcionEvento: descripcionEvento, fecha: fecha, horaInicio: horaInicio, horaFin: horaFin },
                     })
                   }
@@ -125,11 +125,11 @@ export default function TargetaEvento({
                 />
 
                 <CustomButton
-                  title="Ver reservas"
+                  title="Ver reservas"  
                   onPress={() =>
                     router.push({
                       pathname: "/reservaEvento/[code_evento]",
-                      // especificar el parametro del codifgo evento
+                      // mandar codigo evento para buscar las reservas de ese
                       params: { code_evento: code_Evento },
                     })
                   }

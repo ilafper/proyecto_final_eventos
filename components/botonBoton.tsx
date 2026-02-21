@@ -4,8 +4,7 @@ import {
   StyleSheet,
   Text,
   TextStyle,
-  View,
-  ViewStyle,
+  ViewStyle
 } from "react-native";
 
 interface Props {
@@ -29,9 +28,10 @@ export default function CustomButton({
   return (
     <Pressable style={[styles.button, style]} onPress={onPress} disabled={disabled}>
       {/* Icono */}
-      {icon && <View>{icon}</View>}
-
-      <Text style={[styles.text, textStyle]}>{title}</Text>
+      {icon}
+      
+      {/* para que en caso de que solo haya icono no se descuadre */}
+      {title && <Text style={[styles.text, textStyle]}>{title}</Text>}
     </Pressable>
   );
 }
