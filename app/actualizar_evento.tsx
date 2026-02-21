@@ -1,7 +1,7 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { Alert, StyleSheet, TextInput, View } from "react-native";
 import CustomButton from "../components/botonBoton";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
@@ -68,6 +68,9 @@ export default function ActuEevento() {
       console.log("sisisi");
       console.log(respuesta.success);
 
+      Alert.alert("Exito", respuesta.mensaje);
+      router.push("/gestionEventos");
+      
     } else {
       console.log("Error", respuesta.error);
     }

@@ -10,21 +10,21 @@ import useDatosUsuario from "../hooks/usuarioDatos";
 
 
 interface EventoTargetaPropiedades {
-    nombreEvento:string;
-    descripcionEvento:string;
-    plazasTotales:number;
-    PlazasDisponibles:number;
-    fecha:string;
-    horaInicio:string;
-    horaFin:string;
-    estado:string;
-    code_Evento:string;
-    //funciones en funcion de tipo de usuario
-    rol?:"user" | "admin";
-    editar?: () => void;
-    eliminar?: () => void;
-    apuntarse?: () => void;
-    verReservas?: () => void;
+  nombreEvento: string;
+  descripcionEvento: string;
+  plazasTotales: number;
+  PlazasDisponibles: number;
+  fecha: string;
+  horaInicio: string;
+  horaFin: string;
+  estado: string;
+  code_Evento: string;
+  //funciones en funcion de tipo de usuario
+  rol?: "user" | "admin";
+  editar?: () => void;
+  eliminar?: () => void;
+  apuntarse?: () => void;
+  verReservas?: () => void;
 }
 
 
@@ -42,25 +42,33 @@ export default function TargetaEvento({
   eliminar,
   apuntarse,
 }: EventoTargetaPropiedades) {
-    
-    const usuario = useDatosUsuario();
-    const [expandido, setExpandido] = useState(false);
-    const router = useRouter() as any;
-    
-    return (
+
+  const usuario = useDatosUsuario();
+  const [expandido, setExpandido] = useState(false);
+  const router = useRouter() as any;
+  const estadoColor = () => {
+    if (estado === "finalizado") {
+      return styles.estadoFinali;
+    } else {
+      return styles.estado;
+    }
+  }
+  return (
+
     <View style={styles.card}>
       {/* parte siempre visible */}
       <View style={styles.header}>
         <Text style={styles.title}>{nombreEvento}</Text>
-
-        <Text style={styles.estado}>{estado}</Text>
+        {/* cambiar color del estado */}
+        <Text style={[estadoColor()]}>{estado}</Text>
       </View>
 
       <Text style={styles.fecha}>
-         {fecha} | {horaInicio} - {horaFin}
+        {fecha} | {horaInicio} - {horaFin}
       </Text>
 
       {/* boton para expandir*/}
+
       <Pressable
         style={styles.detallesBtn}
         onPress={() => setExpandido(!expandido)}
@@ -71,36 +79,38 @@ export default function TargetaEvento({
 
       </Pressable>
 
+
+
       {/* cotenido oculto*/}
       {expandido && (
         <View style={styles.extraInfo}>
           <Text style={styles.description}>{descripcionEvento}</Text>
 
           <Text style={styles.plazas}>
-             Plazas: {PlazasDisponibles} / {plazasTotales}
+            Plazas: {PlazasDisponibles} / {plazasTotales}
           </Text>
 
-          {/* ACCIONES SEGÚN ROL */}
+          {/* diferenciar que se puede hacer segun rol */}
           <View style={styles.actions}>
             {usuario?.rol === "user" && (
-              <Pressable  style={styles.btnPrimary} onPress={apuntarse}>
+              <Pressable style={styles.btnPrimary} onPress={apuntarse} disabled={estado === "finalizado"}>
                 <Text style={styles.btnText}>Apuntarse</Text>
               </Pressable>
             )}
 
             {usuario?.rol === "admin" && (
               <>
-              {/* los mismos que elimminar pero para actualizar */}
+                {/* los mismos que elimminar pero para actualizar */}
                 <CustomButton
                   title="Editar"
                   onPress={() =>
                     router.push({
-                      pathname: "/actualizar_evento", 
+                      pathname: "/actualizar_evento",
                       // especificar el parametro del codifgo evento
-                      params: { code_evento: code_Evento , nombreEvento:nombreEvento, descripcionEvento:descripcionEvento, fecha:fecha, horaInicio:horaInicio, horaFin:horaFin },
+                      params: { code_evento: code_Evento, nombreEvento: nombreEvento, descripcionEvento: descripcionEvento, fecha: fecha, horaInicio: horaInicio, horaFin: horaFin },
                     })
                   }
-
+                  disabled={estado === "finalizado"}
                   icon={<MaterialIcons name="edit" size={15} color="#ffffff" />}
                   style={styles.btnEdit}
                   textStyle={styles.btnText}
@@ -113,12 +123,12 @@ export default function TargetaEvento({
                   style={styles.btnDelete}
                   textStyle={styles.btnText}
                 />
-                
+
                 <CustomButton
-                  title="Ver reservas"  
+                  title="Ver reservas"
                   onPress={() =>
                     router.push({
-                      pathname: "/reservaEvento/[code_evento]", 
+                      pathname: "/reservaEvento/[code_evento]",
                       // especificar el parametro del codifgo evento
                       params: { code_evento: code_Evento },
                     })
@@ -141,7 +151,7 @@ export default function TargetaEvento({
 
 const styles = StyleSheet.create({
   card: {
-    width:350,
+    width: 350,
     backgroundColor: "#fff",
     padding: 16,
     borderRadius: 14,
@@ -157,6 +167,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#1055a0",
+  },
+
+  estadoFinali: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#fff",
+    backgroundColor: "#ca1414",
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 10,
   },
 
   estado: {
@@ -231,7 +251,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   estiloBtonReservas: {
-    backgroundColor:"#174dfd",
+    backgroundColor: "#174dfd",
     padding: 10,
     borderRadius: 10,
   },

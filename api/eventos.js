@@ -7,7 +7,7 @@ export const eventosApi = {
       //console.log(respuesta);
       return {
         success: true,
-        eventos: respuesta.data.todos_eventos,
+        eventos: respuesta.data.list_eventos,
       };
     } catch (error) {
       //console.log("Error al obtener eventos:", error.response?.data);

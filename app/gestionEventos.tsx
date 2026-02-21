@@ -134,4 +134,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
         zIndex: 999,
     },
+
+    estiloFinalizado: {
+       backgroundColor:"red",
+       color:"white"
+    },
+
+    estiloNormal: {
+       backgroundColor:"#0e549e",
+       color:"white"
+    },
 });

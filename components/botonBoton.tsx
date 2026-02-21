@@ -11,6 +11,7 @@ import {
 interface Props {
   title?: string;
   icon?: JSX.Element;
+  disabled?:boolean;
   onPress?: () => void;
   style?: ViewStyle;
   textStyle?: TextStyle;
@@ -22,14 +23,15 @@ export default function CustomButton({
   onPress,
   style,
   textStyle,
+  disabled=false
+  
 }: Props) {
   return (
-    <Pressable style={[styles.button, style]} onPress={onPress}>
+    <Pressable style={[styles.button, style]} onPress={onPress} disabled={disabled}>
       {/* Icono */}
       {icon && <View>{icon}</View>}
 
-      {/* Texto opcional */}
-      {title ? <Text style={[styles.text, textStyle]}>{title}</Text> : null}
+      <Text style={[styles.text, textStyle]}>{title}</Text>
     </Pressable>
   );
 }
@@ -49,4 +51,5 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+  
 });
