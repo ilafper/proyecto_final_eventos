@@ -3,6 +3,7 @@ import { Picker } from '@react-native-picker/picker';
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Alert, FlatList, Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import FooterMovil from "../../components/footer";
 import Header from "../../components/header";
 import Sidebar from "../../components/sidebar";
 import TargetaReserva from "../../components/targetaReservas";
@@ -172,7 +173,7 @@ export default function ReservasEventos() {
 
 
       {showSidebar && <Sidebar onClose={() => setShowSidebar(false)} />}
-      <FooterSimple />
+      <FooterMovil />
     </View>
   );
 }

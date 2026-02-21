@@ -1,8 +1,9 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import CustomButton from "../components/botonBoton";
 import useDatosUsuario from "../hooks/usuarioDatos";
+
+
+// propiedades targeta y las funciones que se pueden usar que por defecto son opciones
 interface ReservaProps {
   code_reserva?: string;
   nombre_evento: string;
@@ -25,135 +26,155 @@ export default function TargetaReserva({
   cancelar,
   cambiarEstado
 }: ReservaProps) {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [estadoLocal, setEstadoLocal] = useState(estado); // estado viene de props
   const usuario = useDatosUsuario();
+  
+  // colores segun estado by nuetro primo
+  const colorEstado = () => {
+    switch(estado) {
+      case "activa": return "#319736";
+      case "cancelada": return "#c91a14";
+      case "finalizada": return "#888";
+      case "No asistido": return "#000000";
+    }
+  };
+
   return (
     <View style={styles.card}>
-      {/*datos*/}
+      {/* Cabecera con icono y estado */}
       <View style={styles.header}>
-        <Text style={styles.title}>{nombre_evento}</Text>
-
-        <View style={styles.estadoBox}>
+        <View style={styles.headerLeft}>
+          <Text style={styles.title} numberOfLines={1}>{nombre_evento}</Text>
+        </View>
+        <View style={[styles.estadoBadge, { backgroundColor: colorEstado() }]}>
           <Text style={styles.estadoText}>{estado}</Text>
         </View>
       </View>
 
-      <Text style={styles.info}>{fecha}</Text>
+      {/* Línea divisoria sutil */}
+      <View style={styles.divider} />
 
-      <Text style={styles.info}>
-        {horaInicio} - {horaFin}
-      </Text>
-      <View style={styles.actionsRservas}>
+      {/* Información en filas compactas */}
+      <View style={styles.infoRow}>
+        <MaterialIcons name="calendar-today" size={16} color="#666" />
+        <Text style={styles.infoText}>{fecha}</Text>
+      </View>
+
+      <View style={styles.infoRow}>
+        <MaterialIcons name="access-time" size={16} color="#666" />
+        <Text style={styles.infoText}>{horaInicio} - {horaFin}</Text>
+      </View>
+
+      {/* Acciones según rol */}
+      <View style={styles.actionsContainer}>
         {usuario?.rol === "user" && (
-          <CustomButton
-            title="cancel"
+          <Pressable 
+            style={[styles.actionButton, styles.cancelButton]} 
             onPress={cancelar}
-            icon={<MaterialIcons name="cancel" size={15} color="#ffffff" />}
-            style={styles.cancelBtn}
-            textStyle={styles.cancelText}
-          />
+          >
+            <MaterialIcons name="cancel" size={18} color="#fff" />
+            <Text style={styles.actionText}>Cancelar</Text>
+          </Pressable>
         )}
 
         {usuario?.rol === "admin" && (
-
-          <CustomButton
-            title="Cambiar estado"
+          <Pressable 
+            style={[styles.actionButton, styles.adminButton]} 
             onPress={cambiarEstado}
-            icon={<MaterialIcons name="edit" size={15} color="#ffffff" />}
-            style={styles.cancel}
-            textStyle={styles.cancelText}
-          />
+          >
+            <MaterialIcons name="edit" size={18} color="#fff" />
+            <Text style={styles.actionText}>Cambiar estado</Text>
+          </Pressable>
         )}
-
       </View>
-      
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    width: 300,
+    width:300,
     backgroundColor: "#fff",
-    padding: 18,
     borderRadius: 16,
-    marginVertical: 10,
-    marginHorizontal: 15,
-
+    padding: 16,
+    marginVertical: 6,
+    marginHorizontal: 12,
     shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#f0f0f0",
   },
-
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 8,
   },
-
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#1055a0",
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
     flex: 1,
   },
-
-  estadoBox: {
-    backgroundColor: "#1055a0",
-    paddingHorizontal: 10,
+  title: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
+    flex: 1,
+  },
+  estadoBadge: {
+    paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
+    marginLeft: 8,
   },
-
   estadoText: {
     color: "#fff",
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "600",
+    textTransform: "capitalize",
   },
-
-  info: {
-    fontSize: 14,
-    color: "#333",
-    marginBottom: 4,
+  divider: {
+    height: 1,
+    backgroundColor: "#f0f0f0",
+    marginBottom: 10,
   },
-
-  cancelBtn: {
-    marginTop: 14,
+  infoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 6,
+  },
+  infoText: {
+    fontSize: 13,
+    color: "#555",
+    flex: 1,
+  },
+  actionsContainer: {
+    marginTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: "#f0f0f0",
+    paddingTop: 12,
+  },
+  actionButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#d9534f",
-    paddingVertical: 12,
-    borderRadius: 12,
-    gap: 8,
+    paddingVertical: 10,
+    borderRadius: 10,
+    gap: 6,
   },
-  cancel: {
-    width:230,
-    marginTop: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+  cancelButton: {
     backgroundColor: "#d9534f",
-    paddingVertical: 12,
-    borderRadius: 12,
-    gap: 8,
   },
-
-  cancelText: {
+  adminButton: {
+    backgroundColor: "#2E86C1",
+  },
+  actionText: {
     color: "#fff",
     fontWeight: "600",
-    fontSize: 14,
+    fontSize: 13,
   },
-
-  actionsRservas: {
-    display:"flex",
-    flexDirection:"row",
-    justifyContent:"center",
-    gap:20
-
-  },
-
 });

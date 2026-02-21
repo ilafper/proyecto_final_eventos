@@ -16,10 +16,6 @@ export default function ActuEevento() {
   const [code_evento] = useState(params.code_evento as string);
   const [nombreEvento, setNombre] = useState(params.nombreEvento as string);
 
-  const [descripcionEvento, setdesc] = useState(
-    params.descripcionEvento as string,
-  );
-
   const [fecha, setFecha] = useState(params.fecha as string);
 
   const [horaInicio, setHoraInicio] = useState(params.horaInicio as string);
@@ -37,7 +33,6 @@ export default function ActuEevento() {
   const actualizarEvento = async (
     code_evento: string,
     nombreEvento: string,
-    descripcionEvento: string,
     fechaDate: Date,
     horaInicio: string,
     horaFin: string,
@@ -45,7 +40,6 @@ export default function ActuEevento() {
     console.log(
       code_evento,
       nombreEvento,
-      descripcionEvento,
       fechaDate,
       horaInicio,
       horaFin,
@@ -54,7 +48,6 @@ export default function ActuEevento() {
     let eventoActualizado = {
       code_evento,
       nombreEvento,
-      descripcionEvento,
       fechaDate,
       horaInicio,
       horaFin,
@@ -101,14 +94,6 @@ export default function ActuEevento() {
           onChangeText={setNombre}
           style={styles.input}
         />
-
-        <TextInput
-          placeholder="Descripcion del evento"
-          value={descripcionEvento}
-          onChangeText={setdesc}
-          style={styles.input}
-        />
-
         <TextInput
           placeholder="Fecha"
           value={fechaDate.toLocaleDateString()}

@@ -1,12 +1,12 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { ImageBackground, StyleSheet, Text, View, ScrollView } from "react-native";
+import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import fondo from "../assets/images/fondo.png";
 import CustomButton from "../components/botonBoton";
 import FooterMovil from "../components/footer";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
-import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Home() {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -16,7 +16,7 @@ export default function Home() {
     <View style={styles.container}>
       <Header title="Home" onMenuPress={() => setShowSidebar(!showSidebar)} />
 
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+      
         {/* Imagen de fondo con texto y botón */}
         <ImageBackground source={fondo} style={styles.background} resizeMode="cover">
           <View style={styles.overlay}>
@@ -50,14 +50,6 @@ export default function Home() {
               textStyle={styles.botonTexto}
               icon={<MaterialIcons name="book" size={20} color="#fff" />}
             />
-
-            <CustomButton
-              title="Crear"
-              onPress={() => router.push("/nuevoEventoFormu")}
-              style={styles.botonAcc}
-              textStyle={styles.botonTexto}
-              icon={<MaterialIcons name="add-circle" size={20} color="#fff" />}
-            />
           </View>
         </View>
 
@@ -81,7 +73,7 @@ export default function Home() {
             <Text style={styles.infoTexto}>Valoración</Text>
           </View>
         </View>
-      </ScrollView>
+    
       
       {/* Sidebar */}
       {showSidebar && <Sidebar onClose={() => setShowSidebar(false)} />}
@@ -94,7 +86,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f3eded",
+    backgroundColor: "#faf7f7b2",
   },
   scrollContent: {
     paddingBottom: 100, 
@@ -137,7 +129,7 @@ const styles = StyleSheet.create({
   },
   directoContainer: {
     padding: 20,
-    marginTop: 10,
+    marginTop: 6,
   },
   directo: {
     fontSize: 22,
@@ -162,21 +154,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 8,
   },
-  destacadosContainer: {
-    padding: 20,
-  },
-  destacadosTitulo: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 15,
-  },
+  
   infoContainer: {
+    marginTop:30,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    padding: 20,
-    marginTop: 10,
-    marginBottom: 10,
+    padding: 20
   },
   infoItem: {
     alignItems: 'center',

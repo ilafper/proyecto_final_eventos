@@ -1,17 +1,11 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/botonBoton";
 import useDatosUsuario from "../hooks/usuarioDatos";
 
-
-//priedades de cada evento y las funciones qu ese puede hacer
-
-
 interface EventoTargetaPropiedades {
   nombreEvento: string;
-  descripcionEvento: string;
   plazasTotales: number;
   PlazasDisponibles: number;
   fecha: string;
@@ -19,7 +13,6 @@ interface EventoTargetaPropiedades {
   horaFin: string;
   estado: string;
   code_Evento: string;
-  //funciones en funcion de tipo de usuario
   rol?: "user" | "admin";
   editar?: () => void;
   eliminar?: () => void;
@@ -27,10 +20,8 @@ interface EventoTargetaPropiedades {
   verReservas?: () => void;
 }
 
-
 export default function TargetaEvento({
   nombreEvento,
-  descripcionEvento,
   plazasTotales,
   PlazasDisponibles,
   fecha,
@@ -42,221 +33,251 @@ export default function TargetaEvento({
   eliminar,
   apuntarse,
 }: EventoTargetaPropiedades) {
-
   const usuario = useDatosUsuario();
-  const [expandido, setExpandido] = useState(false);
-  const router = useRouter() as any;
-  const estadoColor = () => {
-    if (estado === "finalizado") {
-      return styles.estadoFinali;
-    } else {
-      return styles.estado;
-    }
-  }
+  const router = useRouter();
+  // basicamente calcular la barra de espacio
+  const porcentajeOcupado = ((plazasTotales - PlazasDisponibles) / plazasTotales) * 100;
+
   return (
-
     <View style={styles.card}>
-      {/* parte siempre visible */}
-      <View style={styles.header}>
-        <Text style={styles.title}>{nombreEvento}</Text>
-        {/* cambiar color del estado */}
-        <Text style={[estadoColor()]}>{estado}</Text>
-      </View>
-
-      <Text style={styles.fecha}>
-        {fecha} | {horaInicio} - {horaFin}
-      </Text>
-
-      {/* boton para expandir*/}
-
-      <Pressable
-        style={styles.detallesBtn}
-        onPress={() => setExpandido(!expandido)}
-      >
-        <Text style={styles.detallesText}>
-          {expandido ? "Ocultar detalles ▲" : "Ver detalles ▼"}
-        </Text>
-
-      </Pressable>
-
-
-
-      {/* cotenido oculto*/}
-      {expandido && (
-        <View style={styles.extraInfo}>
-          <Text style={styles.description}>{descripcionEvento}</Text>
-
-          <Text style={styles.plazas}>
-            Plazas: {PlazasDisponibles} / {plazasTotales}
-          </Text>
-
-          {/* diferenciar que se puede hacer segun rol */}
-          <View style={styles.actions}>
-            {usuario?.rol === "user" && (
-              <Pressable style={styles.btnPrimary} onPress={apuntarse} disabled={estado === "finalizado"}>
-                <Text style={styles.btnText}>Apuntarse</Text>
-              </Pressable>
-            )}
-
-            {usuario?.rol === "admin" && (
-              <>
-                {/* los mismos que elimminar pero para actualizar */}
-                <CustomButton
-                  title="Editar"
-                  onPress={() =>
-                    router.push({
-                      pathname: "/actualizar_evento",
-                      // manadar los datos del evento para actualizar y rellenar el formi
-                      params: { code_evento: code_Evento, nombreEvento: nombreEvento, descripcionEvento: descripcionEvento, fecha: fecha, horaInicio: horaInicio, horaFin: horaFin },
-                    })
-                  }
-                  disabled={estado === "finalizado"}
-                  icon={<MaterialIcons name="edit" size={15} color="#ffffff" />}
-                  style={styles.btnEdit}
-                  textStyle={styles.btnText}
-                />
-
-                <CustomButton
-                  title="Eliminar"
-                  onPress={eliminar}
-                  icon={<MaterialIcons name="delete-outline" size={15} color="#ffffff" />}
-                  style={styles.btnDelete}
-                  textStyle={styles.btnText}
-                />
-
-                <CustomButton
-                  title="Ver reservas"  
-                  onPress={() =>
-                    router.push({
-                      pathname: "/reservaEvento/[code_evento]",
-                      // mandar codigo evento para buscar las reservas de ese
-                      params: { code_evento: code_Evento },
-                    })
-                  }
-                  icon={<MaterialIcons name="visibility" size={15} color="#ffffff" />}
-                  style={styles.estiloBtonReservas}
-                  textStyle={styles.textoReservas}
-                />
-              </>
-            )}
+      {/* Borde decorativo izquierdo */}
+      <View style={[styles.bordeLeft, { backgroundColor: estado === "finalizado" ? "#ca1414" : "#3433CD" }]} />
+      
+      <View style={styles.content}>
+        {/* Header con título y estado */}
+        <View style={styles.header}>
+          <Text style={styles.title}>{nombreEvento}</Text>
+          <View style={[styles.estadoBadge, { backgroundColor: estado === "finalizado" ? "#ca1414" : "#3433CD" }]}>
+            <Text style={styles.estadoText}>{estado}</Text>
           </View>
         </View>
-      )}
+
+        {/* Info */}
+        <View style={styles.infoGrid}>
+          <View style={styles.infoItem}>
+            <MaterialIcons name="calendar-today" size={16} color="#3433CD" />
+            <Text style={styles.infoText}>{fecha}</Text>
+          </View>
+          <View style={styles.infoItem}>
+            <MaterialIcons name="access-time" size={16} color="#3433CD" />
+            <Text style={styles.infoText}>{horaInicio} - {horaFin}</Text>
+          </View>
+          <View style={styles.infoItem}>
+            <MaterialIcons name="people" size={16} color="#3433CD" />
+            <Text style={styles.infoText}>
+              <Text style={styles.infoDestacado}>{PlazasDisponibles}</Text> / {plazasTotales} plazas
+            </Text>
+          </View>
+        </View>
+
+        {/* barrita pogreso de ocupacion */}
+        <View style={styles.progressBarContainer}>
+          <View style={[styles.progressBar, { width: `${porcentajeOcupado}%` }]} />
+        </View>
+
+        {/* Acciones según rol */}
+        <View style={styles.actions}>
+          {usuario?.rol === "user" && (
+            <Pressable 
+              style={[styles.btnPrimary, estado === "finalizado" && styles.btnDisabled]} 
+              onPress={apuntarse} 
+              disabled={estado === "finalizado"}
+            >
+              <MaterialIcons name="event-available" size={18} color="#fff" />
+              <Text style={styles.btnText}>Apuntarse</Text>
+            </Pressable>
+          )}
+
+          {usuario?.rol === "admin" && (
+            <>
+
+              <CustomButton
+                title="Editar"
+                onPress={() =>
+                  router.push({
+                    pathname: "/actualizar_evento",
+                    params: { 
+                      code_evento: code_Evento, 
+                      nombreEvento,
+                      fecha, 
+                      horaInicio, 
+                      horaFin 
+                    },
+                  })
+                }
+                disabled={estado === "finalizado"}
+                icon={<MaterialIcons name="edit" size={15} color="#ffffff" />}
+                style={[styles.btnEdit, estado === "finalizado" && styles.btnDisabled]}
+                textStyle={styles.btnText}
+              />
+
+              <CustomButton
+                title="Eliminar"
+                onPress={eliminar}
+                icon={<MaterialIcons name="delete-outline" size={15} color="#ffffff" />}
+                style={styles.btnDelete}
+                textStyle={styles.btnText}
+              />
+
+              <CustomButton
+                title="Reservas"
+                onPress={() =>
+                  router.push({
+                    pathname: "/reservaEvento/[code_evento]",
+                    params: { code_evento: code_Evento },
+                  })
+                }
+                icon={<MaterialIcons name="visibility" size={15} color="#ffffff" />}
+                style={styles.btnReservas}
+                textStyle={styles.btnText}
+              />
+            </>
+          )}
+        </View>
+      </View>
     </View>
   );
 }
-
-
-
 
 const styles = StyleSheet.create({
   card: {
     width: 350,
     backgroundColor: "#fff",
-    padding: 16,
-    borderRadius: 14,
+    borderRadius: 16,
+    flexDirection: "row",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+    marginVertical: 8,
+    overflow: "hidden",
   },
-
+  bordeLeft: {
+    width: 6,
+    height: "100%",
+  },
+  content: {
+    flex: 1,
+    padding: 16,
+  },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginBottom: 12,
   },
-
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#1055a0",
-  },
-
-  estadoFinali: {
-    fontSize: 13,
-    fontWeight: "600",
-    color: "#fff",
-    backgroundColor: "#ca1414",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 10,
-  },
-
-  estado: {
-    fontSize: 13,
-    fontWeight: "600",
-    color: "#fff",
-    backgroundColor: "#1055a0",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 10,
-  },
-
-  fecha: {
-    marginTop: 6,
-    fontSize: 14,
     color: "#333",
+    flex: 1,
   },
-
-  detallesBtn: {
-    marginTop: 10,
+  estadoBadge: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    marginLeft: 10,
   },
-
-  detallesText: {
-    color: "#1055a0",
+  estadoText: {
+    fontSize: 12,
     fontWeight: "600",
+    color: "#fff",
+    textTransform: "capitalize",
   },
-
-  extraInfo: {
-    marginTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: "#eee",
-    paddingTop: 10,
+  descripcionContainer: {
+    flexDirection: "row",
+    gap: 8,
+    marginBottom: 16,
+    backgroundColor: "#f8f8f8",
+    padding: 12,
+    borderRadius: 8,
   },
-
   description: {
     fontSize: 14,
-    color: "#333",
-    marginBottom: 5,
+    color: "#555",
+    flex: 1,
+    lineHeight: 20,
   },
-
-  plazas: {
-    fontSize: 13,
-    fontWeight: "600",
+  infoGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 12,
     marginBottom: 12,
   },
-
+  infoItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    minWidth: "45%",
+  },
+  infoText: {
+    fontSize: 13,
+    color: "#666",
+  },
+  infoDestacado: {
+    fontWeight: "bold",
+    color: "#3433CD",
+  },
+  progressBarContainer: {
+    height: 6,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 3,
+    marginBottom: 16,
+    overflow: "hidden",
+  },
+  progressBar: {
+    height: "100%",
+    backgroundColor: "#3433CD",
+    borderRadius: 3,
+  },
   actions: {
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: 5,
+    justifyContent: "center",
   },
-
   btnPrimary: {
-    backgroundColor: "#1055a0",
-    padding: 10,
-    borderRadius: 10,
-  },
+    backgroundColor: "#3433CD",
 
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
   btnEdit: {
     backgroundColor: "#f0a500",
-    padding: 10,
-    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
   },
-
   btnDelete: {
     backgroundColor: "#d9534f",
-    padding: 10,
-    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
   },
-
+  btnReservas: {
+    backgroundColor: "#3433CD",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  btnDisabled: {
+    opacity: 0.5,
+  },
   btnText: {
     color: "#fff",
     fontWeight: "600",
-  },
-  estiloBtonReservas: {
-    backgroundColor: "#174dfd",
-    padding: 10,
-    borderRadius: 10,
-  },
-  textoReservas: {
-    color: "#fff",
-    fontWeight: "600",
+    fontSize: 13,
   },
 });

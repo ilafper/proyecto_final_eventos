@@ -4,13 +4,12 @@ import { useEffect, useState } from "react";
 import { Alert, FlatList, StyleSheet, View } from "react-native";
 import { eventosApi } from "../api/eventos";
 import CustomButton from "../components/botonBoton";
+import FooterMovil from "../components/footer";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import TargetaEvento from "../components/targetaEvento";
 import useDatosUsuario from "../hooks/usuarioDatos";
-import FooterMovil from "../components/footer";
 
-import FooterSimple from "../components/footer";
 
 export default function GestionEventos() {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -44,7 +43,7 @@ export default function GestionEventos() {
         console.log(respuesta);
         
         if (respuesta.success) {
-    
+            Alert.alert("Exito", respuesta.mensaje)
         }else {
             console.log("Error", respuesta.error);
             Alert.alert("Error", respuesta.error);
