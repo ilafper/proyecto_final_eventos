@@ -1,13 +1,13 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { Alert, StyleSheet, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { eventosApi } from "../api/eventos";
 import CustomButton from "../components/botonBoton";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
-
-import { eventosApi } from "../api/eventos";
-
+import FooterMovil from "../components/footer";
 export default function ActuEevento() {
   const [showSidebar, setShowSidebar] = useState(false);
   // recoger los datos de param
@@ -17,17 +17,12 @@ export default function ActuEevento() {
   const [nombreEvento, setNombre] = useState(params.nombreEvento as string);
 
   const [fecha, setFecha] = useState(params.fecha as string);
-
   const [horaInicio, setHoraInicio] = useState(params.horaInicio as string);
-
   const [horaFin, setHoraFin] = useState(params.horaFin as string);
 
   const [showDatePicker, setShowDatePicker] = useState(false);
-
   const [showHoraInicioPicker, setShowHoraInicioPicker] = useState(false);
-
   const [showHoraFinPicker, setShowHoraFinPicker] = useState(false);
-
 
   // actualizar evento
   const actualizarEvento = async (
@@ -67,17 +62,11 @@ export default function ActuEevento() {
     } else {
       console.log("Error", respuesta.error);
     }
-
-
-
-
-
   };
 
   console.log("fecha modi", fecha);
-
+  // pasar la fecha a date
   let fechaDate = new Date(fecha);
-
   console.log(fechaDate);
 
   return (
@@ -87,19 +76,73 @@ export default function ActuEevento() {
         onMenuPress={() => setShowSidebar(!showSidebar)}
       />
 
-      <View style={styles.formContainer}>
-        <TextInput
-          placeholder="Nombre del evento"
-          value={nombreEvento}
-          onChangeText={setNombre}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Fecha"
-          value={fechaDate.toLocaleDateString()}
-          onFocus={() => setShowDatePicker(true)}
-          style={styles.input}
-        />
+      <View style={styles.formCard}>
+
+
+        {/* Nombre del evento */}
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Nombre del evento</Text>
+          <View style={styles.inputContainer}>
+            <MaterialIcons name="event" size={20} color="#0307d6a8" style={styles.inputIcon} />
+            <TextInput
+              placeholder="Nombre del evento"
+              placeholderTextColor="#aaa"
+              value={nombreEvento}
+              onChangeText={setNombre}
+              style={styles.input}
+            />
+          </View>
+        </View>
+
+        {/* Fecha */}
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Fecha del evento</Text>
+          <TouchableOpacity 
+            style={styles.inputContainer}
+            onPress={() => setShowDatePicker(true)}
+            activeOpacity={0.7}
+          >
+            <MaterialIcons name="calendar-today" size={20} color="#0307d6a8" style={styles.inputIcon} />
+            <Text style={[styles.input, styles.inputText]}>
+              {fechaDate.toLocaleDateString()}
+            </Text>
+            <MaterialIcons name="arrow-drop-down" size={24} color="#0307d6a8" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Hora inicio */}
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Hora de inicio</Text>
+          <TouchableOpacity 
+            style={styles.inputContainer}
+            onPress={() => setShowHoraInicioPicker(true)}
+            activeOpacity={0.7}
+          >
+            <MaterialIcons name="access-time" size={20} color="#0307d6a8" style={styles.inputIcon} />
+            <Text style={[styles.input, styles.inputText]}>
+              {horaInicio || "Seleccionar hora"}
+            </Text>
+            <MaterialIcons name="arrow-drop-down" size={24} color="#0307d6a8" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Hora fin */}
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Hora de finalización</Text>
+          <TouchableOpacity 
+            style={styles.inputContainer}
+            onPress={() => setShowHoraFinPicker(true)}
+            activeOpacity={0.7}
+          >
+            <MaterialIcons name="access-time" size={20} color="#0307d6a8" style={styles.inputIcon} />
+            <Text style={[styles.input, styles.inputText]}>
+              {horaFin || "Seleccionar hora"}
+            </Text>
+            <MaterialIcons name="arrow-drop-down" size={24} color="#0307d6a8" />
+          </TouchableOpacity>
+        </View>
+
+        {/* DatePickers */}
         {showDatePicker && (
           <DateTimePicker
             value={fechaDate}
@@ -107,30 +150,20 @@ export default function ActuEevento() {
             display="default"
             onChange={(event, selectedDate) => {
               setShowDatePicker(false);
+
               if (selectedDate) setFecha(selectedDate);
             }}
           />
         )}
 
-        {/* hora de inicio */}
-
-        <TextInput
-          placeholder="Hora inicio"
-          value={horaInicio}
-          onFocus={() => setShowHoraInicioPicker(true)}
-          style={styles.input}
-        />
-
         {showHoraInicioPicker && (
           <DateTimePicker
-            //siempre devuelve en formato date Iso
             value={new Date()}
             mode="time"
             display="default"
             onChange={(event, selectedTime) => {
               setShowHoraInicioPicker(false);
               if (selectedTime) {
-                //pasar la hora inicio de formato date a por ejemplo "22:12 que por defecto el de eleigir mediante un reloj es formato date aunque diga time"
                 const horas = selectedTime
                   .getHours()
                   .toString()
@@ -145,23 +178,14 @@ export default function ActuEevento() {
           />
         )}
 
-        <TextInput
-          placeholder="Hora Fin"
-          value={horaFin}
-          onFocus={() => setShowHoraFinPicker(true)}
-          style={styles.input}
-        />
-
         {showHoraFinPicker && (
           <DateTimePicker
-            //siempre devuelve en formato date Iso
             value={new Date()}
             mode="time"
             display="default"
             onChange={(event, selectedTime) => {
               setShowHoraFinPicker(false);
               if (selectedTime) {
-                //pasar la hora inicio de formato date a por ejemplo "22:12 que por defecto el de eleigir mediante un reloj es formato date aunque diga time"
                 const horas = selectedTime
                   .getHours()
                   .toString()
@@ -182,26 +206,18 @@ export default function ActuEevento() {
             actualizarEvento(
               code_evento,
               nombreEvento,
-              descripcionEvento,
               fechaDate,
               horaInicio,
               horaFin,
             )
           }
-          style={styles.estiloBoton}
+          style={styles.createButton}
+          textStyle={styles.createButtonText}
         />
       </View>
 
-      {/* input de fecha cambiado  con el pakete de fecha para poder elegir como sifuese calendario */}
-
-      {/* <Text>Codifo del evento:{code_evento}</Text>
-      <Text>desc del evento:{descripcionEvento}</Text>
-      <Text>fecha del evento:{fecha}</Text>
-      <Text>patata del evento:{nombreEvento}</Text>
-      <Text>patata del evento:{horaInicio}</Text>
-      <Text>patata del evento:{horaFin}</Text> */}
-
       {showSidebar && <Sidebar onClose={() => setShowSidebar(false)} />}
+      <FooterMovil />
     </View>
   );
 }
@@ -209,38 +225,75 @@ export default function ActuEevento() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#f8f9fac2",
   },
-
-  lista: {
-    paddingTop: 20,
-    paddingBottom: 100,
+  
+  formCard: {
+    backgroundColor: "#fff",
+    borderRadius: 24,
+    margin: 20,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 3,
+  },
+  formSubtitle: {
+    fontSize: 14,
+    color: "#888",
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  inputGroup: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#555",
+    marginBottom: 8,
+    marginLeft: 4,
+  },
+  inputContainer: {
+    flexDirection: "row",
     alignItems: "center",
-    gap: 18,
+    backgroundColor: "#f8f9fa",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
+    paddingHorizontal: 16,
+    minHeight: 50,
+  },
+  inputIcon: {
+    marginRight: 12,
   },
   input: {
-    width: 300,
-    backgroundColor: "#fff",
-    padding: 12,
-    marginVertical: 6,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#ccc",
+    flex: 1,
+    fontSize: 15,
+    color: "#333",
+    paddingVertical: 12,
   },
-
-  formContainer: {
-    marginTop: 30,
-    borderWidth: 1,
-    borderColor: "red",
-    padding: 20,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  inputText: {
+    color: "#333",
+    paddingVertical: 12,
   },
-  estiloBoton: {
-    marginTop: 10,
-    backgroundColor: "#2e2beb",
-    color: "white",
-    width: 200,
+  createButton: {
+    backgroundColor: "#0307d6d5",
+    borderRadius: 12,
+    height: 52,
+    marginTop: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  createButtonText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#fff",
   },
 });

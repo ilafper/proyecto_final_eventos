@@ -18,7 +18,8 @@ export default function ReservasEventos() {
   const [modalVisible, setModalVisible] = useState(false);
   const [reservaSeleccionada, setReservaSeleccionada] = useState(null);
   const [estadoActual, setEstadoActual] = useState("");
-
+  
+  
   const mostrarModal = (reserva) => {
     console.log("Sisisisis reserva moodal");
 

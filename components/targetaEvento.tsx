@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/botonBoton";
 import useDatosUsuario from "../hooks/usuarioDatos";
 
@@ -75,17 +75,20 @@ export default function TargetaEvento({
           <View style={[styles.progressBar, { width: `${porcentajeOcupado}%` }]} />
         </View>
 
-        {/* Acciones según rol */}
+        {/* Acciones segun rol */}
         <View style={styles.actions}>
           {usuario?.rol === "user" && (
-            <Pressable 
-              style={[styles.btnPrimary, estado === "finalizado" && styles.btnDisabled]} 
-              onPress={apuntarse} 
-              disabled={estado === "finalizado"}
-            >
-              <MaterialIcons name="event-available" size={18} color="#fff" />
-              <Text style={styles.btnText}>Apuntarse</Text>
-            </Pressable>
+            <CustomButton
+                title="Apuntarse"
+                onPress={apuntarse}
+                disabled={estado === "finalizado"}
+                icon={<MaterialIcons name="event-available" size={18} color="#fff" />}
+                style={[styles.btnPrimary, estado === "finalizado" && styles.btnDisabled]}
+                textStyle={styles.btnText}
+              />
+
+
+           
           )}
 
           {usuario?.rol === "admin" && (
@@ -93,6 +96,7 @@ export default function TargetaEvento({
 
               <CustomButton
                 title="Editar"
+                //pasarle los parametros del evento por params
                 onPress={() =>
                   router.push({
                     pathname: "/actualizar_evento",
@@ -237,14 +241,18 @@ const styles = StyleSheet.create({
     gap: 5,
     justifyContent: "center",
   },
+
+
   btnPrimary: {
     backgroundColor: "#3433CD",
-
+    width:300,
     borderRadius: 8,
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
   },
+
+
   btnEdit: {
     backgroundColor: "#f0a500",
     paddingVertical: 8,

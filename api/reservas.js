@@ -27,7 +27,7 @@ export const reservasApi = {
       //console.log(respuesta);
       return {
         success: true,
-        mensage: respuesta.message,
+        mensage: respuesta.data.message,
       };
 
     } catch (error) {

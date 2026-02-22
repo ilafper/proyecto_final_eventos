@@ -2,11 +2,11 @@
 import { useEffect, useState } from "react";
 import { Alert, FlatList, StyleSheet, View } from "react-native";
 import { eventosApi } from "../api/eventos";
+import FooterMovil from "../components/footer";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import TargetaEvento from "../components/targetaEvento";
 import useDatosUsuario from "../hooks/usuarioDatos";
-import FooterMovil from "../components/footer";
 export default function eventos() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [eventos, setEventos] = useState([]);
@@ -84,15 +84,13 @@ export default function eventos() {
           marginTop: 20,
           gap: 18,
           alignItems: "center",
-          borderWidth: 1,
-          borderColor: "red",
-          paddingBottom: 100,
+          paddingBottom: 150,
         }}
+        
         renderItem={({ item: cada_evento }) => (
           // llamar al compoente de targeta y carga los datos y se mostrar con el tilo que le pusimos en el componente
           <TargetaEvento
             nombreEvento={cada_evento.nombreEvento}
-            descripcionEvento={cada_evento.descripcionEvento}
             fecha={cada_evento.fecha}
             horaInicio={cada_evento.horaInicio}
             horaFin={cada_evento.horaFin}

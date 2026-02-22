@@ -1,13 +1,13 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { eventosApi } from "../api/eventos";
 import CustomButton from "../components/botonBoton";
 import FooterMovil from "../components/footer";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
-import { MaterialIcons } from "@expo/vector-icons";
 
 export default function NuevoEventoFormu() {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -33,7 +33,7 @@ export default function NuevoEventoFormu() {
 
     const respuesta = await eventosApi.crearEvento(nuevoEvento);
     if (respuesta.success) {
-      Alert.alert("Éxito", "Evento creado correctamente");
+      Alert.alert("Exito", "Evento creado correctamente");
       router.push("/gestionEventos");
     } else {
       Alert.alert("Error", respuesta.error);
@@ -47,7 +47,6 @@ export default function NuevoEventoFormu() {
         onMenuPress={() => setShowSidebar(!showSidebar)}
       />
 
-      
         <View style={styles.formCard}>
 
           {/* Nombre del evento */}
@@ -91,12 +90,7 @@ export default function NuevoEventoFormu() {
             >
               <MaterialIcons name="calendar-today" size={20} color="#0307d6a8" style={styles.inputIcon} />
               <Text style={[styles.input, styles.inputText]}>
-                {fecha.toLocaleDateString('es-ES', { 
-                  weekday: 'long', 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
-                })}
+                {fecha.toLocaleDateString()}
               </Text>
               <MaterialIcons name="arrow-drop-down" size={24} color="#0307d6a8" />
             </TouchableOpacity>

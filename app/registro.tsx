@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
         width: 200,
         height: 200,
         borderRadius: 100,
-        backgroundColor: '#3433CD10',
+        backgroundColor: '#3333cdef',
     },
     circle2: {
         position: 'absolute',
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
         width: 150,
         height: 150,
         borderRadius: 75,
-        backgroundColor: '#3433CD10',
+        backgroundColor: '#3333cd',
     },
     centeredContent: {
         flex: 1,
