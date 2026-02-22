@@ -8,5 +8,7 @@ const api = axios.create({
   timeout: 10000,
 });
 
+
+
 //usarlo en otros archivos
 export default api;

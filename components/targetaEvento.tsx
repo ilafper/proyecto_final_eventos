@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/botonBoton";
 import useDatosUsuario from "../hooks/usuarioDatos";
 
+// propeidades de targeta evento, y funciones 
 interface EventoTargetaPropiedades {
   nombreEvento: string;
   plazasTotales: number;
@@ -13,7 +14,6 @@ interface EventoTargetaPropiedades {
   horaFin: string;
   estado: string;
   code_Evento: string;
-  rol?: "user" | "admin";
   editar?: () => void;
   eliminar?: () => void;
   apuntarse?: () => void;
@@ -36,6 +36,7 @@ export default function TargetaEvento({
   const usuario = useDatosUsuario();
   const router = useRouter();
   // basicamente calcular la barra de espacio
+  //8-4 = 4 , 4 entre 8 = 0.5 por 100 = 100%
   const porcentajeOcupado = ((plazasTotales - PlazasDisponibles) / plazasTotales) * 100;
 
   return (
@@ -72,6 +73,7 @@ export default function TargetaEvento({
 
         {/* barrita pogreso de ocupacion */}
         <View style={styles.progressBarContainer}>
+          {/* ajustar el acnho de la barra con las plazas */}
           <View style={[styles.progressBar, { width: `${porcentajeOcupado}%` }]} />
         </View>
 
