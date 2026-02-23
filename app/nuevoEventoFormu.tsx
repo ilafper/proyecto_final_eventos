@@ -30,14 +30,15 @@ export default function NuevoEventoFormu() {
       horaInicio,
       horaFin,
     };
-
-    const respuesta = await eventosApi.crearEvento(nuevoEvento);
-    if (respuesta.success) {
-      Alert.alert("Exito", "Evento creado correctamente");
-      router.push("/gestionEventos");
-    } else {
-      Alert.alert("Error", respuesta.error);
-    }
+    console.log(nuevoEvento);
+    
+    // const respuesta = await eventosApi.crearEvento(nuevoEvento);
+    // if (respuesta.success) {
+    //   Alert.alert("Exito", "Evento creado correctamente");
+    //   router.push("/gestionEventos");
+    // } else {
+    //   Alert.alert("Error", respuesta.error);
+    // }
   };
 
   return (

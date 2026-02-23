@@ -36,12 +36,12 @@ export default function TargetaEvento({
   const usuario = useDatosUsuario();
   const router = useRouter();
   // basicamente calcular la barra de espacio
-  //8-4 = 4 , 4 entre 8 = 0.5 por 100 = 100%
+  //8-4 = 4 , 4 entre 8 = 0.5 por 100 = 50% (antes puse 100 las mates fallan)
   const porcentajeOcupado = ((plazasTotales - PlazasDisponibles) / plazasTotales) * 100;
 
   return (
     <View style={styles.card}>
-      {/* Borde decorativo izquierdo */}
+      {/* estado  estilo perso*/}
       <View style={[styles.bordeLeft, { backgroundColor: estado === "finalizado" ? "#ca1414" : "#3433CD" }]} />
       
       <View style={styles.content}>
@@ -111,6 +111,7 @@ export default function TargetaEvento({
                     },
                   })
                 }
+
                 disabled={estado === "finalizado"}
                 icon={<MaterialIcons name="edit" size={15} color="#ffffff" />}
                 style={[styles.btnEdit, estado === "finalizado" && styles.btnDisabled]}

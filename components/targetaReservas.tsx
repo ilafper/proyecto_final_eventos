@@ -11,7 +11,6 @@ interface ReservaProps {
   horaInicio: string;
   horaFin: string;
   estado: string;
-  rol?: "user" | "admin";
   cancelar?: () => void;
   cambiarEstado?: () => void;
 }
@@ -45,15 +44,16 @@ export default function TargetaReserva({
         <View style={styles.headerLeft}>
           <Text style={styles.title} numberOfLines={1}>{nombre_evento}</Text>
         </View>
+        {/* cambiar el color segun estado */}
         <View style={[styles.estadoBadge, { backgroundColor: colorEstado() }]}>
           <Text style={styles.estadoText}>{estado}</Text>
         </View>
       </View>
 
-      {/* Línea divisoria sutil */}
+      {/* linea divisoria */}
       <View style={styles.divider} />
 
-      {/* Información en filas compactas */}
+      
       <View style={styles.infoRow}>
         <MaterialIcons name="calendar-today" size={16} color="#666" />
         <Text style={styles.infoText}>{fecha}</Text>

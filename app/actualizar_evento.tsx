@@ -5,9 +5,9 @@ import { useState } from "react";
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { eventosApi } from "../api/eventos";
 import CustomButton from "../components/botonBoton";
+import FooterMovil from "../components/footer";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
-import FooterMovil from "../components/footer";
 export default function ActuEevento() {
   const [showSidebar, setShowSidebar] = useState(false);
   // recoger los datos de param
@@ -79,7 +79,7 @@ export default function ActuEevento() {
       <View style={styles.formCard}>
 
 
-        {/* Nombre del evento */}
+        {/* nomvre*/}
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Nombre del evento</Text>
           <View style={styles.inputContainer}>
@@ -164,6 +164,7 @@ export default function ActuEevento() {
             onChange={(event, selectedTime) => {
               setShowHoraInicioPicker(false);
               if (selectedTime) {
+                // mostrar solo la hora 22:15
                 const horas = selectedTime
                   .getHours()
                   .toString()
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f8f9fac2",
   },
-  
+
   formCard: {
     backgroundColor: "#fff",
     borderRadius: 24,

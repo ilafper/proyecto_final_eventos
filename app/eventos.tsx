@@ -86,7 +86,7 @@ export default function eventos() {
           alignItems: "center",
           paddingBottom: 150,
         }}
-        
+
         renderItem={({ item: cada_evento }) => (
           // llamar al compoente de targeta y carga los datos y se mostrar con el tilo que le pusimos en el componente
           <TargetaEvento
@@ -98,7 +98,6 @@ export default function eventos() {
             PlazasDisponibles={cada_evento.PlazasDisponibles}
             plazasTotales={cada_evento.plazasTotales}
             code_Evento={cada_evento.code_Evento}
-            rol="user"
             apuntarse={() =>
               apuntarseEvento({
                 codigo_evento: cada_evento.code_Evento,
